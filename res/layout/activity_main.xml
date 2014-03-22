@@ -11,20 +11,20 @@
     tools:context=".Main" >
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/right_button"
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/button2"
-        android:layout_alignBottom="@+id/button2"
-        android:layout_toRightOf="@+id/button2"
+        android:layout_alignBaseline="@+id/down_button"
+        android:layout_alignBottom="@+id/down_button"
+        android:layout_toRightOf="@+id/down_button"
         android:onClick="onRightClick"
         android:text="Right"
         android:width="68dp"
         android:height="48dp" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/down_button"
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -36,38 +36,38 @@
         android:width="68dp" />
 
     <Button
-        android:id="@+id/button1"
+        android:id="@+id/left_button"
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/button2"
-        android:layout_alignBottom="@+id/button2"
-        android:layout_toLeftOf="@+id/button2"
+        android:layout_alignBaseline="@+id/down_button"
+        android:layout_alignBottom="@+id/down_button"
+        android:layout_toLeftOf="@+id/down_button"
         android:height="48dp"
         android:onClick="onLeftClick"
         android:text="Left"
         android:width="68dp" />
 
     <Button
-        android:id="@+id/button4"
+        android:id="@+id/up_button"
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/button3"
-        android:layout_toRightOf="@+id/button1"
+        android:layout_above="@+id/right_button"
+        android:layout_toRightOf="@+id/left_button"
         android:onClick="onUpClick"
         android:text="Up"
         android:width="68dp"
         android:height="48dp" />
 
     <Button
-        android:id="@+id/button7"
+        android:id="@+id/start_button"
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/button5"
-        android:layout_alignBottom="@+id/button5"
-        android:layout_alignLeft="@+id/button1"
+        android:layout_alignBaseline="@+id/stop_button"
+        android:layout_alignBottom="@+id/stop_button"
+        android:layout_alignLeft="@+id/left_button"
         android:layout_marginLeft="31dp"
         android:onClick="onStartClick"
         android:text="Start"
@@ -75,15 +75,23 @@
         android:height="48dp" />
 
     <Button
-        android:id="@+id/button5"
+        android:id="@+id/stop_button"
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/button7"
+        android:layout_toRightOf="@+id/start_button"
         android:onClick="onStopClick"
         android:text="Stop"
         android:width="68dp"
         android:height="48dp" />
+
+    <com.example.jpacmandroid.GameView
+        android:id="@+id/gameView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/up_button"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/start_button" />
 
 </RelativeLayout>
