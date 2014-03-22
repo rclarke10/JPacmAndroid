@@ -18,6 +18,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.TextView;
 
 public class Main extends Activity implements Observer {
 
@@ -39,6 +40,7 @@ public class Main extends Activity implements Observer {
 				WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		setContentView(R.layout.activity_main);
 		
+		
 		level = new Level();
 		try {
 			main();
@@ -53,6 +55,8 @@ public class Main extends Activity implements Observer {
 	public void onStartClick(View view) {
 		setDirection(START);
 		buttonPanel.start();
+		TextView num_points_textview = (TextView) findViewById(R.id.num_points_text);
+		num_points_textview.setText(getGame().getPointManager().getFoodEaten() + "/" + getGame().getPointManager().totalFoodInGame());
 	}
 	
 	/*
@@ -61,6 +65,8 @@ public class Main extends Activity implements Observer {
 	public void onStopClick(View view) {
 		setDirection(STOP);
 		buttonPanel.pause();
+		TextView num_points_textview = (TextView) findViewById(R.id.num_points_text);
+		num_points_textview.setText(getGame().getPointManager().getFoodEaten() + "/" + getGame().getPointManager().totalFoodInGame());
 	}
 	
 	/*
@@ -68,6 +74,8 @@ public class Main extends Activity implements Observer {
 	 */
 	public void onUpClick(View view) {
 		setDirection(UP);
+		TextView num_points_textview = (TextView) findViewById(R.id.num_points_text);
+		num_points_textview.setText(getGame().getPointManager().getFoodEaten() + "/" + getGame().getPointManager().totalFoodInGame());
 	}
 	
 	/*
@@ -75,6 +83,8 @@ public class Main extends Activity implements Observer {
 	 */
 	public void onDownClick(View view) {
 		setDirection(DOWN);
+		TextView num_points_textview = (TextView) findViewById(R.id.num_points_text);
+		num_points_textview.setText(getGame().getPointManager().getFoodEaten() + "/" + getGame().getPointManager().totalFoodInGame());
 	}
 	
 	/*
@@ -82,6 +92,8 @@ public class Main extends Activity implements Observer {
 	 */
 	public void onLeftClick(View view) {
 		setDirection(LEFT);
+		TextView num_points_textview = (TextView) findViewById(R.id.num_points_text);
+		num_points_textview.setText(getGame().getPointManager().getFoodEaten() + "/" + getGame().getPointManager().totalFoodInGame());
 	}
 	
 	/*
@@ -89,6 +101,8 @@ public class Main extends Activity implements Observer {
 	 */
 	public void onRightClick(View view) {
 		setDirection(RIGHT);
+		TextView num_points_textview = (TextView) findViewById(R.id.num_points_text);
+		num_points_textview.setText(getGame().getPointManager().getFoodEaten() + "/" + getGame().getPointManager().totalFoodInGame());
 	}
 	
 	private static int direction = 0;

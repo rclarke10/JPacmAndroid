@@ -85,6 +85,27 @@
         android:text="Stop"
         android:width="68dp"
         android:height="48dp" />
+    
+    <TextView
+        android:id="@+id/points_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/stop_button"
+        android:text="Points:"
+        android:layout_marginLeft="25dp"
+        />
+    
+    <TextView
+        android:id="@+id/num_points_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/stop_button"
+        android:layout_below="@+id/points_text"
+        android:text=""
+        android:layout_marginLeft="20dp"
+        />
 
     <com.example.jpacmandroid.GameView
         android:id="@+id/gameView1"
