@@ -46,23 +46,18 @@ public class ImageLoader {
     
     private View view;
     
-    /**
-     * Create an empty (non intialized) image factory.
-     * @param gameView 
-     * @param cellHeight 
-     * @param cellWidth 
-     */
-   
-    
+       
     /**
      * Create an empty (non initialized) image factory
      * requiring that all images are of the given (width, height).
      * @param w requested image width
      * @param h requested image height
+     * 
      */
     public ImageLoader(int w, int h, View view) { 
         width = w;
         height = h;
+        this.view = view;
     }
      
     
@@ -77,8 +72,7 @@ public class ImageLoader {
 				BitmapFactory.decodeResource(view.getResources(), R.drawable.ghost1)
 		};
 
-		String[] sequence = new String[]{"2", "3", "4", "3", "2"};
-		
+		String[] sequence = new String[]{"2", "3", "4", "3", "2"};	
 		
 		
 		playerImage = new Bitmap[Direction.values().length][sequence.length + 1];
@@ -158,9 +152,7 @@ public class ImageLoader {
     public Bitmap monster(int animationIndex) {
         assert animationIndex >= 0;
         return monsterImage[animationIndex % monsterAnimationCount()];
-    }
-
-    
+    }   
      
     /**
      * Resize a given image to the required dimension.
