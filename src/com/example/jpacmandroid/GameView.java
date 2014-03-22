@@ -1,6 +1,5 @@
 package com.example.jpacmandroid;
 
-
 import org.jpacman.framework.model.IBoardInspector;
 import org.jpacman.framework.model.Player;
 import org.jpacman.framework.model.Sprite;
@@ -15,18 +14,17 @@ import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.view.View;
 
-
 public class GameView extends View{
 
 	 /**
      * Width of an individual cell, in pixels.
      */
-    private static final int CELL_WIDTH = 35;
+    private static final int CELL_WIDTH = 20;
 
     /**
      * Height of an individual cell, in pixels.
      */
-    private static final int CELL_HEIGHT = 35;
+    private static final int CELL_HEIGHT = 20;
 
     /**
      * The horizontal gap between cells, in pixels.
@@ -52,11 +50,8 @@ public class GameView extends View{
      * Indicator for animation.
      */
     private int animationCount;
-    
-    int n = 0;
-	    
-	Paint paint;
-	Bitmap ghost1, ghost2, pacman1;
+        
+	Paint paint;	
 	
 	public GameView(Context context, AttributeSet attributeSet, IBoardInspector board){
 		super(context, attributeSet);
@@ -92,8 +87,12 @@ public class GameView extends View{
         int starty = 2 * CELL_VGAP + (CELL_HEIGHT + CELL_VGAP) * y;
  
         Rect fullCell = fullArea(startx, starty);        
-        paint.setColor(Color.BLUE); 
+        paint.setColor(Color.BLUE);
         canvas.drawRect(fullCell, paint);
+        paint.setStyle(Paint.Style.STROKE);
+        paint.setColor(Color.RED);
+        canvas.drawRect(fullCell, paint);
+        paint.setStyle(Paint.Style.FILL_AND_STROKE);
         
         if (boardInspector.spriteTypeAt(x, y) == SpriteType.FOOD) {
         	Rect centeredCell = centeredArea(startx, starty, 2);
@@ -129,13 +128,18 @@ public class GameView extends View{
         return (CELL_HEIGHT + CELL_VGAP) * (worldHeight() + 1);
     }
 
-  
+    /**
+     * @return The board height measured in cells, >= 0.
+     */  
 	private int worldHeight() {
-		return 23;
+		return boardInspector.getHeight();
 	}
 
+	 /**
+     * @return The board width measured in cells, >= 0.
+     */
 	private int worldWidth() {
-		return 23;
+		return boardInspector.getWidth();
 	}
 	
 	private Rect fullArea(int startx, int starty) {

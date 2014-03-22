@@ -1,9 +1,7 @@
 package org.jpacman.framework.view;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import javax.swing.Timer;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import org.jpacman.framework.controller.IController;
 
@@ -39,17 +37,20 @@ public class Animator implements IController {
     /**
      * Create an animator for a particular board viewer.
      * @param bv The view to be animated.
+     * @throws InterruptedException 
      */
-    public Animator(BoardView bv) {
-        gameViewer = bv;
-        timer = new Timer(DELAY,
-                new ActionListener() {
-            @Override
-			public void actionPerformed(ActionEvent e) {
-                doTick();
-            }
-        }
-        );
+    public Animator(GameView gv) throws InterruptedException {
+        gameViewer = gv;
+        timer = new Timer();
+        timer.schedule(new TickTask(), DELAY);       
+    }
+    
+    class TickTask extends TimerTask{
+		@Override
+		public void run() {
+			doTick();
+			
+		}    	
     }
 
     /**
@@ -57,7 +58,7 @@ public class Animator implements IController {
      */
     @Override
 	public void stop() {
-        timer.stop();
+        ((IController) timer).stop();
     }
 
     /**
@@ -65,11 +66,12 @@ public class Animator implements IController {
      */
     @Override
 	public void start()  {
-        timer.start();
+        ((IController) timer).start();
     }
     
     @Override
     public void doTick() { 
+    	System.out.println("tick");
     	gameViewer.nextAnimation();
     }
 }

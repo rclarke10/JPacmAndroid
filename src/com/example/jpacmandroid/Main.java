@@ -172,7 +172,6 @@ public class Main extends Activity implements Observer {
     private void createUI() throws FactoryException {
     	assert getGame() != null;
     	assert ghostController != null;
-      	animator = new Animator();
     	
     	pi = (pi == null ? new PacmanInteraction() : pi)
     		.withGameInteractor(getGame())
