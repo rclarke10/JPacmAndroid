@@ -17,7 +17,18 @@ public class Board {
 	 * Player starting position. For default game this is (11,15)
 	 */
 	private int playerStartX = 11;
-	private int playerStartY = 15; 
+	private int playerStartY = 15;
+	
+	/*
+	 * Ghost position holder
+	 */
+	private int[] ghostX = new int[15];
+	private int[] ghostY = new int[15];
+	
+	/*
+	 * Ghost counter
+	 */
+	private int numGhosts = 0;
 
 	/*
 	 * Total score holder as calculated by parser
@@ -91,6 +102,9 @@ public class Board {
 						playerStartY = y;
 					} else if (token == Sprite.GHOST_SYM) {
 						board[x][y] = Sprite.GHOST;
+						ghostX[numGhosts] = x;
+						ghostY[numGhosts] = y;
+						numGhosts++;
 					} else if (token == Sprite.EMPTY_SYM) {
 						board[x][y] = Sprite.EMPTY;
 					}
@@ -127,6 +141,24 @@ public class Board {
 	 */
 	public void setSpriteAt(int sprite, int x, int y) {
 		board[x][y] = sprite;
+	}
+	
+	/*
+	 * Get number of ghosts 
+	 */
+	public int getNumGhosts(){
+		return numGhosts;
+	}
+	
+	/*
+	 * Get ghosts
+	 */
+	public int getGhostX(int x){
+		return ghostX[x];
+	}
+	
+	public int getGhostY(int y){
+		return ghostY[y];
 	}
 
 	public int getHeight() {
