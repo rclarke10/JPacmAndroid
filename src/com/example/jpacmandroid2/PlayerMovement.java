@@ -62,6 +62,7 @@ public class PlayerMovement {
 				playerY++;
 				break;
 			case Sprite.GHOST:
+				board.setSpriteAt(Sprite.EMPTY, oldX, oldY);
 				state.setState(State.LOST);
 				break;
 			default:
@@ -94,6 +95,7 @@ public class PlayerMovement {
 				playerY--;
 				break;
 			case Sprite.GHOST:
+				board.setSpriteAt(Sprite.EMPTY, oldX, oldY);
 				state.setState(State.LOST);
 				break;
 			default:
@@ -125,6 +127,7 @@ public class PlayerMovement {
 				playerX++;
 				break;
 			case Sprite.GHOST:
+				board.setSpriteAt(Sprite.EMPTY, oldX, oldY);
 				state.setState(State.LOST);
 				break;
 			default:
@@ -156,6 +159,7 @@ public class PlayerMovement {
 				playerX--;
 				break;
 			case Sprite.GHOST:
+				board.setSpriteAt(Sprite.EMPTY, oldX, oldY);
 				state.setState(State.LOST);
 				break;
 			default:
