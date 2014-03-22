@@ -22,8 +22,8 @@ public class Board {
 	/*
 	 * Ghost position holder
 	 */
-	private int[] ghostX = new int[15];
-	private int[] ghostY = new int[15];
+	public int[] ghostX = new int[50];
+	public int[] ghostY = new int[50];
 	
 	/*
 	 * Ghost counter
