@@ -11,7 +11,7 @@ public class Board {
 	/*
 	 * Board Array
 	 */
-	private static int board[][] = new int[50][50];
+	private static int board[][] = new int[23][21];
 
 	/*
 	 * Player starting position. For default game this is (11,15)
@@ -162,11 +162,11 @@ public class Board {
 	}
 
 	public int getHeight() {
-		return 50;
+		return board[0].length;
 	}
 	
 	public int getWidth(){
-		return 50;
+		return board.length;
 	}
 
 }

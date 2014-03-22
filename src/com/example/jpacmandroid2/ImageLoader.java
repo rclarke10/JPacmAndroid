@@ -191,5 +191,14 @@ public class ImageLoader {
        
         return bm;
     }
+
+
+	public void setWidth(int cellWidth) {
+		width = cellWidth;		
+	}
+	
+	public void setHeight(int cellHeight){
+		height = cellHeight;
+	}
     
 }

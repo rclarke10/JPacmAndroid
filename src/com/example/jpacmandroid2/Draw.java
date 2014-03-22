@@ -12,6 +12,9 @@ import android.view.View;
 
 public class Draw extends View {
 	
+	private static final int H = 21;
+	private static final int W = 23;
+	
 	 /**
      * Width of an individual cell, in pixels.
      */
@@ -42,6 +45,9 @@ public class Draw extends View {
     
     private int viewWidth; 
         
+    private int cellHeight;
+    private int cellWidth;
+    
     private Board board;
     
 	Paint paint;	
@@ -56,7 +62,7 @@ public class Draw extends View {
 		super(context, attribute_set);
 		paint = new Paint();
 		
-		imageLoader = new ImageLoader(CELL_WIDTH, CELL_HEIGHT,this);       
+		imageLoader = new ImageLoader(cellWidth, cellHeight,this);       
         imageLoader.loadImages();
 	}
 
@@ -67,8 +73,16 @@ public class Draw extends View {
 		 if(viewInitialized == false){
 			 viewWidth = this.getWidth();
 			 viewHeight = this.getHeight();
+			 
+			 cellWidth = viewWidth/W;
+			 cellHeight = viewHeight/H;
+			 
 			 Log.i("View", "Height: " + viewHeight);
 			 Log.i("View", "Width: " + viewWidth);	
+			 
+			 imageLoader.setWidth(cellWidth);
+			 imageLoader.setHeight(cellHeight);
+			 
 			 imageLoader.resizeAll();
 			 viewInitialized = true;
 		 }
@@ -94,8 +108,8 @@ public class Draw extends View {
 	private void drawCell(Canvas canvas, int x, int y) {
 		int fillColor = spriteColor(x, y);
 		
-        int startx = 2 * CELL_HGAP + (CELL_WIDTH + CELL_HGAP) * x;
-        int starty = 2 * CELL_VGAP + (CELL_HEIGHT + CELL_VGAP) * y;
+        int startx = 2 * CELL_HGAP + (cellWidth + CELL_HGAP) * x;
+        int starty = 2 * CELL_VGAP + (cellHeight + CELL_VGAP) * y;
  
         Rect fullCell = fullArea(startx, starty);
                
@@ -129,15 +143,15 @@ public class Draw extends View {
    
 	
 	private Rect fullArea(int startx, int starty) {
-		Rect rect = new Rect(startx, starty, startx + CELL_WIDTH, starty + CELL_HEIGHT);
+		Rect rect = new Rect(startx, starty, startx + cellWidth, starty + cellHeight);
 		return rect;
 	}
 	
 	private Rect centeredArea(int startx, int starty, int radius) {
-		assert radius <= CELL_WIDTH / 2;		
+		assert radius <= cellWidth / 2;		
 		
-		int x = startx + CELL_WIDTH / 2 - radius;
-		int y = starty + CELL_HEIGHT / 2 - radius;
+		int x = startx + cellWidth / 2 - radius;
+		int y = starty + cellHeight / 2 - radius;
 		int r = 2 * radius + 1;
 		
 		return new Rect(x, y, x + r, y + r);
@@ -202,7 +216,7 @@ public class Draw extends View {
      * @return The width of the board viewer.
      */
     public final int windowWidth() {
-        return (CELL_WIDTH + CELL_HGAP) * (worldWidth() + 1);
+        return (cellWidth + CELL_HGAP) * (worldWidth() + 1);
     }
 
     /**
@@ -211,7 +225,7 @@ public class Draw extends View {
      * @return The height of the board viewer.
      */
     public final int windowHeight() {
-        return (CELL_HEIGHT + CELL_VGAP) * (worldHeight() + 1);
+        return (cellHeight + CELL_VGAP) * (worldHeight() + 1);
     }
 
     /**
@@ -228,12 +242,12 @@ public class Draw extends View {
 		return board.getWidth();
 	}
 	
-	private int spriteArray[][] = new int[50][50];
+	private int spriteArray[][] = new int[23][21];
 	
 	public void setSpriteArray(int [][] array){
 		
-		for(int x = 0; x < 50; x++){
-			for(int y = 0; y < 50; y++){
+		for(int x = 0; x < 23; x++){
+			for(int y = 0; y < 21; y++){
 				this.spriteArray[x][y] = array[x][y];	
 			}
 		}
