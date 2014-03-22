@@ -7,6 +7,8 @@ import javax.swing.Timer;
 
 import org.jpacman.framework.controller.IController;
 
+import com.example.jpacmandroid.GameView;
+
 /**
  * The primary responsibility of this class is
  * to trigger the board viewer to display the
@@ -22,7 +24,7 @@ public class Animator implements IController {
      * The viewer that must be informed to show the
      * next animation.
      */
-    private final BoardView boardViewer;
+    private final GameView gameViewer;
 
     /**
      * The timer used.
@@ -39,7 +41,7 @@ public class Animator implements IController {
      * @param bv The view to be animated.
      */
     public Animator(BoardView bv) {
-        boardViewer = bv;
+        gameViewer = bv;
         timer = new Timer(DELAY,
                 new ActionListener() {
             @Override
@@ -68,6 +70,6 @@ public class Animator implements IController {
     
     @Override
     public void doTick() { 
-    	boardViewer.nextAnimation();
+    	gameViewer.nextAnimation();
     }
 }

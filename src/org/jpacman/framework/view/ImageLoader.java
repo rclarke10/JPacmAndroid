@@ -1,13 +1,18 @@
 package org.jpacman.framework.view;
 
-import java.awt.Image;
+
 import java.io.IOException;
 import java.net.URL;
 
-import javax.swing.ImageIcon;
-
 import org.jpacman.framework.factory.FactoryException;
 import org.jpacman.framework.model.Direction;
+
+import com.example.jpacmandroid.GameView;
+import com.example.jpacmandroid.R;
+
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.view.View;
 
 /**
  * The responsibilities of this class include obtaining images from file,
@@ -22,12 +27,12 @@ public class ImageLoader {
     /**
      * Animation sequence of images for monsters.
      */
-    private Image[] monsterImage;
+    private Bitmap[] monsterImage;
 
     /**
      * Animation sequence of images for the player.
      */
-    private Image[][] playerImage;  
+    private Bitmap[][] playerImage;  
     
     /**
      * Width of the images.
@@ -39,10 +44,15 @@ public class ImageLoader {
      */
     private int height = -1;
     
+    private View view;
+    
     /**
      * Create an empty (non intialized) image factory.
+     * @param gameView 
+     * @param cellHeight 
+     * @param cellWidth 
      */
-    public ImageLoader() { /* Nothing needs to be done */ }
+   
     
     /**
      * Create an empty (non initialized) image factory
@@ -50,7 +60,7 @@ public class ImageLoader {
      * @param w requested image width
      * @param h requested image height
      */
-    public ImageLoader(int w, int h) { 
+    public ImageLoader(int w, int h, View view) { 
         width = w;
         height = h;
     }
@@ -61,25 +71,46 @@ public class ImageLoader {
      * Different images exist for different phases of the animation.
      * @throws FactoryException if the images can't be found.
      */
-    public void loadImages() throws FactoryException {
-    	try {
-    		monsterImage = new Image[]{
-    				getImage("Ghost1.gif"),
-    				getImage("Ghost2.gif") };
+    public void loadImages() {
+    	monsterImage = new Bitmap[]{
+				BitmapFactory.decodeResource(view.getResources(), R.drawable.ghost1),
+				BitmapFactory.decodeResource(view.getResources(), R.drawable.ghost1)
+		};
 
-    		String[] sequence = new String[]{"2", "3", "4", "3", "2"};
-    		playerImage = new Image[Direction.values().length][sequence.length + 1];
-    		for (Direction d : Direction.values()) {
-    			int dir = d.ordinal();
-    			playerImage[dir][0] = getImage("PacMan1.gif");
-    			for (int seq = 0; seq < sequence.length; seq++) {
-    				String name = "PacMan" + sequence[seq] + d.toString().toLowerCase() + ".gif";
-    				playerImage[dir][seq + 1] = getImage(name);
-    			}
-    		}
-    	} catch (IOException io) {
-    		throw new FactoryException("Can't load images", io);
-    	}
+		String[] sequence = new String[]{"2", "3", "4", "3", "2"};
+		
+		
+		
+		playerImage = new Bitmap[Direction.values().length][sequence.length + 1];
+		
+		playerImage[Direction.DOWN.ordinal()][2] = BitmapFactory.
+				decodeResource(view.getResources(), R.drawable.pacman2down);
+		playerImage[Direction.DOWN.ordinal()][3] = BitmapFactory.
+				decodeResource(view.getResources(), R.drawable.pacman2down);
+		playerImage[Direction.DOWN.ordinal()][4] = BitmapFactory.
+				decodeResource(view.getResources(), R.drawable.pacman2down);
+		
+
+		playerImage[Direction.UP.ordinal()][2] = BitmapFactory.
+				decodeResource(view.getResources(), R.drawable.pacman2up);
+		playerImage[Direction.UP.ordinal()][3] = BitmapFactory.
+				decodeResource(view.getResources(), R.drawable.pacman3up);
+		playerImage[Direction.UP.ordinal()][4] = BitmapFactory.
+				decodeResource(view.getResources(), R.drawable.pacman4up);
+		
+		playerImage[Direction.LEFT.ordinal()][2] = BitmapFactory.
+				decodeResource(view.getResources(), R.drawable.pacman2left);
+		playerImage[Direction.LEFT.ordinal()][3] = BitmapFactory.
+				decodeResource(view.getResources(), R.drawable.pacman3left);
+		playerImage[Direction.LEFT.ordinal()][4] = BitmapFactory.
+				decodeResource(view.getResources(), R.drawable.pacman4left);
+		
+		playerImage[Direction.RIGHT.ordinal()][2] = BitmapFactory.
+				decodeResource(view.getResources(), R.drawable.pacman2right);
+		playerImage[Direction.RIGHT.ordinal()][3] = BitmapFactory.
+				decodeResource(view.getResources(), R.drawable.pacman3right);
+		playerImage[Direction.RIGHT.ordinal()][4] = BitmapFactory.
+				decodeResource(view.getResources(), R.drawable.pacman4right);
     }
 
     /**
@@ -110,13 +141,13 @@ public class ImageLoader {
      * @param anim Animation step
      * @return Player image in appropriate direction.
      */
-    public Image player(Direction dir, int anim) {
+    public Bitmap player(Direction dir, int anim) {
         assert anim >= 0;
-        Image img = null;
+        Bitmap bm = null;
         int dirIndex = dir.ordinal();
-        img = playerImage[dirIndex][anim % playerAnimationCount()];
-        assert img != null;
-        return img;
+        bm = playerImage[dirIndex][anim % playerAnimationCount()];
+        assert bm != null;
+        return bm;
     }
 
     /**
@@ -124,31 +155,11 @@ public class ImageLoader {
      * @param animationIndex counter indicating which animation to use.
      * @return The monster image at the given animation index.
      */
-    public Image monster(int animationIndex) {
+    public Bitmap monster(int animationIndex) {
         assert animationIndex >= 0;
         return monsterImage[animationIndex % monsterAnimationCount()];
     }
 
-    /**
-     * Obtain an image from a file / resource that can
-     * be found on the classpath.
-     * @param name The file containg, e.g., a .gif picture.
-     * @return The corresponding Image.
-     * @throws IOException If file can't be found.
-     */
-    private Image getImage(String name) throws IOException {
-        assert name != null;
-        
-        ClassLoader cl = Thread.currentThread().getContextClassLoader();
-        URL picfile = cl.getResource(name);
-        if (picfile == null) {
-            throw new IOException("Can't load image: "  + name);
-        }
-        Image result = new ImageIcon(picfile).getImage();
-        assert result != null;
- 
-        return resize(result);
-    }
     
      
     /**
@@ -156,9 +167,10 @@ public class ImageLoader {
      * @param im The image
      * @return The resized image.
      */
-    Image resize(Image im) {
+    /*
+    Bitmap resize(Bitmap im) {
         assert im != null;
-        Image result = im;
+        Bitmap result = im;
         if (width > 0 && height > 0) {
             int w = im.getWidth(null);        
             int h = im.getHeight(null);
@@ -169,4 +181,5 @@ public class ImageLoader {
         assert result != null;
         return result;
     }
+    */
 }
