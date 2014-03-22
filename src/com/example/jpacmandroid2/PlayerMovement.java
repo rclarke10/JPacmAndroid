@@ -50,10 +50,11 @@ public class PlayerMovement {
 			playerY--;
 			switch (board.getSpriteAt(playerX, playerY)) {
 			case Sprite.EMPTY:
-				board.setSpriteAt(Sprite.EMPTY, oldX, oldY);
+				board.setSpriteAt(Sprite.EMPTY, oldX-1, oldY);
 				break;
 			case Sprite.FOOD:
-				board.setSpriteAt(Sprite.EMPTY, oldX, oldY);
+				board.setSpriteAt(Sprite.EMPTY, oldX-1, oldY);
+
 				eat();
 				break;
 			case Sprite.WALL:
@@ -84,7 +85,7 @@ public class PlayerMovement {
 				board.setSpriteAt(Sprite.EMPTY, oldX, oldY);
 				break;
 			case Sprite.FOOD:
-				board.setSpriteAt(Sprite.EMPTY, oldX, oldY);
+				board.setSpriteAt(Sprite.EMPTY, oldX-1, oldY);
 				eat();
 				break;
 			case Sprite.WALL:
@@ -111,10 +112,18 @@ public class PlayerMovement {
 			playerX--;
 			switch (board.getSpriteAt(playerX, playerY)) {
 			case Sprite.EMPTY:
-				board.setSpriteAt(Sprite.EMPTY, oldX, oldY);
+				if(oldY == 15){
+					board.setSpriteAt(Sprite.EMPTY, oldX, oldY);	
+				}else{
+				board.setSpriteAt(Sprite.EMPTY, oldX, oldY-1);
+				}
 				break;
 			case Sprite.FOOD:
-				board.setSpriteAt(Sprite.EMPTY, oldX, oldY);
+				if(oldY == 15){
+					board.setSpriteAt(Sprite.EMPTY, oldX, oldY);	
+				}else{
+				board.setSpriteAt(Sprite.EMPTY, oldX, oldY-1);
+				}
 				eat();
 				break;
 			case Sprite.WALL:
@@ -141,10 +150,18 @@ public class PlayerMovement {
 			playerX++;
 			switch (board.getSpriteAt(playerX, playerY)) {
 			case Sprite.EMPTY:
-				board.setSpriteAt(Sprite.EMPTY, oldX, oldY);
+				if(oldY == 15){
+					board.setSpriteAt(Sprite.EMPTY, oldX, oldY);	
+				}else{
+				board.setSpriteAt(Sprite.EMPTY, oldX, oldY-1);
+				}
 				break;
 			case Sprite.FOOD:
-				board.setSpriteAt(Sprite.EMPTY, oldX, oldY);
+				if(oldY == 15){
+					board.setSpriteAt(Sprite.EMPTY, oldX, oldY);	
+				}else{
+				board.setSpriteAt(Sprite.EMPTY, oldX, oldY-1);
+				}
 				eat();
 				break;
 			case Sprite.WALL:
