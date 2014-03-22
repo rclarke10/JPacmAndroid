@@ -14,10 +14,10 @@ public class Board {
 	private static int board[][] = new int[50][50];
 
 	/*
-	 * Player starting position
+	 * Player starting position. For default game this is (11,15)
 	 */
-	private int playerStartX;
-	private int playerStartY;
+	private int playerStartX = 11;
+	private int playerStartY = 15; 
 
 	/*
 	 * Total score holder as calculated by parser
@@ -86,6 +86,9 @@ public class Board {
 						totalScore += 10;
 					} else if (token == Sprite.PACMAN_SYM) {
 						board[x][y] = Sprite.PACMAN;
+						//initialize player starting position
+						playerStartX = x;
+						playerStartY = y;
 					} else if (token == Sprite.GHOST_SYM) {
 						board[x][y] = Sprite.GHOST;
 					} else if (token == Sprite.EMPTY_SYM) {

@@ -26,10 +26,10 @@ public class PlayerMovement {
 
 	public PlayerMovement(Board board, State state, Score score, Draw draw) {
 		this.board = board;
-		this.playerX = board.startX();
-		this.playerY = board.startY();
-		this.oldX = board.startX();
-		this.oldY = board.startY();
+		this.playerX = 11;//board.startX();
+		this.playerY = 15;//board.startY();
+		this.oldX = 11;//board.startX();
+		this.oldY = 15;//board.startY();
 		this.state = state;
 		this.score = score;
 		this.draw = draw;
@@ -53,6 +53,7 @@ public class PlayerMovement {
 				board.setSpriteAt(Sprite.EMPTY, oldX, oldY);
 				break;
 			case Sprite.FOOD:
+				board.setSpriteAt(Sprite.EMPTY, oldX, oldY);
 				eat();
 				break;
 			case Sprite.WALL:
@@ -83,6 +84,7 @@ public class PlayerMovement {
 				board.setSpriteAt(Sprite.EMPTY, oldX, oldY);
 				break;
 			case Sprite.FOOD:
+				board.setSpriteAt(Sprite.EMPTY, oldX, oldY);
 				eat();
 				break;
 			case Sprite.WALL:
@@ -112,6 +114,7 @@ public class PlayerMovement {
 				board.setSpriteAt(Sprite.EMPTY, oldX, oldY);
 				break;
 			case Sprite.FOOD:
+				board.setSpriteAt(Sprite.EMPTY, oldX, oldY);
 				eat();
 				break;
 			case Sprite.WALL:
@@ -141,6 +144,7 @@ public class PlayerMovement {
 				board.setSpriteAt(Sprite.EMPTY, oldX, oldY);
 				break;
 			case Sprite.FOOD:
+				board.setSpriteAt(Sprite.EMPTY, oldX, oldY);
 				eat();
 				break;
 			case Sprite.WALL:
@@ -165,7 +169,6 @@ public class PlayerMovement {
 	 * Eats the food and increases score
 	 */
 	private void eat() {
-		board.setSpriteAt(Sprite.EMPTY, playerX, playerY);
 		score.addScore();
 	}
 }

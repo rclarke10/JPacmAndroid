@@ -58,6 +58,9 @@ public class Game extends Activity {
 		draw.setSpriteArray(board.getBoard());
 		draw.setBoard(board);
 		pm = new PlayerMovement(board, state, score, draw);
+		
+		Log.i("sPOS","x:"+Integer.toString(board.startX()));
+		Log.i("sPOS","y:"+Integer.toString(board.startY()));
 	}
 	
 	/*
