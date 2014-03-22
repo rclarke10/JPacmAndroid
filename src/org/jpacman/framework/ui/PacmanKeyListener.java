@@ -1,14 +1,13 @@
 package org.jpacman.framework.ui;
 
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import com.example.jpacmandroid.Main;
 
 /**
  * Map keyboard events to jpacman events.
  * 
  * @author Arie van Deursen, TU Delft, Jan 29, 2012
  */
-public class PacmanKeyListener implements KeyListener {
+public class PacmanKeyListener {
 	
 	/**
 	 * The interface to the underlying model.
@@ -25,50 +24,32 @@ public class PacmanKeyListener implements KeyListener {
 		modelEvents = me;
 	}
 
-	@Override
-	public void keyTyped(KeyEvent e) {
-		// nothing.		
-	}
-
-	@Override
-	public void keyPressed(KeyEvent event) {
+	public void keyPressed() {
 		int code;
 
-		code = event.getKeyCode();
+		code = Main.getDirection();
 
 		switch (code) {
-		case KeyEvent.VK_UP: // or
-		case KeyEvent.VK_K:
+		case Main.UP:
 			modelEvents.up();
 			break;
-		case KeyEvent.VK_DOWN: // or
-		case KeyEvent.VK_J:
+		case Main.DOWN:
 			modelEvents.down();
 			break;
-		case KeyEvent.VK_LEFT: // or
-		case KeyEvent.VK_H:
+		case Main.LEFT:
 			modelEvents.left();
 			break;
-		case KeyEvent.VK_RIGHT: // or
-		case KeyEvent.VK_L:
+		case Main.RIGHT:
 			modelEvents.right();
 			break;
-		case KeyEvent.VK_Q:
+		case Main.STOP:
 			modelEvents.stop();  
 			break;
-		case KeyEvent.VK_X:
-			modelEvents.exit(); 
-			break;
-		case KeyEvent.VK_S:
+		case Main.START:
 			modelEvents.start(); 
 			break;
 		default:
 			// all other events ignored.
 		}
-	}
-
-	@Override
-	public void keyReleased(KeyEvent e) {
-		// nothing.
 	}
 }
