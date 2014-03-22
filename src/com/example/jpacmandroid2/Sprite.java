@@ -22,5 +22,7 @@ public class Sprite {
 	/*
 	 * TODO Insert image locations below
 	 */
+
+	
 	
 }

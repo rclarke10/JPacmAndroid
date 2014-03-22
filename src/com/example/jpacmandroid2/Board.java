@@ -126,4 +126,12 @@ public class Board {
 		board[x][y] = sprite;
 	}
 
+	public int getHeight() {
+		return 50;
+	}
+	
+	public int getWidth(){
+		return 50;
+	}
+
 }
