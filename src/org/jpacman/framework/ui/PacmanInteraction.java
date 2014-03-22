@@ -44,11 +44,6 @@ public class PacmanInteraction extends Observable implements IPacmanInteraction,
 	private MatchState currentState = MatchState.PAUSING;
 	
 	/**
-	 * Window to be deleted upon game exit.
-	 */
-	private IDisposable disposableWindow;
-	
-	/**
 	 * Model of the game which can execute basic commands.
 	 */
 	private IGameInteractor gameInteractor;
@@ -79,7 +74,6 @@ public class PacmanInteraction extends Observable implements IPacmanInteraction,
 	@Override
 	public void exit() {
 		stopControllers();
-		disposableWindow.dispose();
 	}
 
 	@Override
@@ -132,16 +126,6 @@ public class PacmanInteraction extends Observable implements IPacmanInteraction,
 	public MatchState getCurrentState() {
 		return currentState;
 	}	
-	
-	/**
-	 * Provide the main window that has to be disposed off during exit.
-	 * @param win Main window
-	 * @return Itself, for fluency.
-	 */
-	public PacmanInteraction withDisposable(IDisposable win) {
-		disposableWindow = win;
-		return this;
-	}
 	
 	/**
 	 * Provide the interactor towards the model of the game.
