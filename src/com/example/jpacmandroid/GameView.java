@@ -14,6 +14,7 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.Display;
 import android.view.View;
 
 public class GameView extends View{
@@ -52,9 +53,14 @@ public class GameView extends View{
      * Indicator for animation.
      */
     private int animationCount;
+    
+    private int viewHeight;
+    
+    private int viewWidth; 
         
 	Paint paint;	
 	
+	boolean viewInitialized = false;
 	
 	public void setBoardInspector(IBoardInspector ibs){
 		this.boardInspector = ibs;
@@ -62,6 +68,7 @@ public class GameView extends View{
 	
 	public GameView(Context context, AttributeSet attributeSet){
 		super(context, attributeSet);
+					
     	imageLoader = new ImageLoader(CELL_WIDTH, CELL_HEIGHT,this);       
         imageLoader.loadImages();
 	}	
@@ -69,6 +76,16 @@ public class GameView extends View{
 	@Override
 	public void onDraw(Canvas canvas){
 		 super.onDraw(canvas);
+		 
+		 if(viewInitialized == false){
+			 viewWidth = this.getWidth();
+			 viewHeight = this.getHeight();
+			 Log.i("View", "Height: " + viewHeight);
+			 Log.i("View", "Width: " + viewWidth);	
+			 imageLoader.resizeAll();
+			 viewInitialized = true;
+		 }
+		 
 		 paint = new Paint();	 			 		
 		
 		 paint.setColor(Color.BLUE);		 
@@ -94,33 +111,35 @@ public class GameView extends View{
         int starty = 2 * CELL_VGAP + (CELL_HEIGHT + CELL_VGAP) * y;
  
         Rect fullCell = fullArea(startx, starty);
-        
-        paint.setStyle(Paint.Style.FILL_AND_STROKE);
-        paint.setColor(fillColor);
-        canvas.drawRect(fullCell, paint);
-        
-        paint.setColor(Color.BLUE);
+               
         paint.setStyle(Paint.Style.STROKE);
+        paint.setColor(Color.BLUE);
         canvas.drawRect(fullCell, paint);
-        paint.setStyle(Paint.Style.FILL_AND_STROKE);
-        
         
         if (boardInspector.spriteTypeAt(x, y) == SpriteType.FOOD) {
+        	paint.setStyle(Paint.Style.FILL);
         	Rect centeredCell = centeredArea(startx, starty, 2);
         	paint.setColor(Color.BLACK);
         	canvas.drawRect(fullCell, paint);
         	paint.setColor(Color.RED);
         	canvas.drawRect(centeredCell, paint);
         	
+        }else{
+        	paint.setStyle(Paint.Style.FILL);
+        	paint.setColor(fillColor);
+        	canvas.drawRect(fullCell, paint);
         }
         
       	Bitmap bm = spriteBitmap(boardInspector.spriteAt(x, y));
         if (bm != null) {
         	canvas.drawBitmap(bm, startx, starty, paint);
+        	String s = boardInspector.spriteAt(x, y).toString();
+        	Log.i("game view", s);
         }else{
         	Log.i("game view", "bitmap is null");
-        }
-      
+        	
+        }        
+        
  	}
    
 	
@@ -143,19 +162,15 @@ public class GameView extends View{
 	private int spriteColor(int x, int y) {
 		SpriteType st = boardInspector.spriteTypeAt(x, y);
 		int c = Color.YELLOW;
-		
-		switch (st) {
+		switch(st){
 		case GHOST:
-			c = Color.BLUE;
+			c = Color.BLACK;
 			break;
-		case FOOD:
-			c = Color.RED;
+		case PLAYER:
+			c = Color.BLACK;
 			break;
 		case WALL:
 			c = Color.GREEN;
-			break;
-		case PLAYER:
-			c = Color.YELLOW;
 			break;
 		case OTHER:
 			c = Color.BLACK;
@@ -163,10 +178,8 @@ public class GameView extends View{
 		case EMPTY:
 			c = Color.GRAY;
 			break;
-		default:
-			assert false : "No other Sprite Types " + st;
 		}
-		
+				
 		return c;
 	}
 	
@@ -179,16 +192,12 @@ public class GameView extends View{
         Bitmap bm = null;
         if (imageLoader != null && sprite != null) {
             if (sprite instanceof Player) {
-                bm = imageLoader.player(
-                		((Player) sprite).getDirection(),
-                        animationCount);
+                bm = imageLoader.player(((Player) sprite).getDirection(), animationCount);
                 Log.i("sprite", "player");
             }
             if (sprite.getSpriteType() == SpriteType.GHOST) { 
                  bm = imageLoader.monster(animationCount);
             }
-        }else{
-        	Log.i("sprite", "null");
         }
         return bm;
     }

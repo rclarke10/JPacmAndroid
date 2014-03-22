@@ -1,17 +1,11 @@
 package org.jpacman.framework.view;
 
-
-import java.io.IOException;
-import java.net.URL;
-
 import org.jpacman.framework.factory.FactoryException;
 import org.jpacman.framework.model.Direction;
-
-import com.example.jpacmandroid.GameView;
 import com.example.jpacmandroid.R;
-
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.util.Log;
 import android.view.View;
 
 /**
@@ -112,6 +106,20 @@ public class ImageLoader {
 				decodeResource(view.getResources(), R.drawable.pacman3right);
 		playerImage[Direction.RIGHT.ordinal()][4] = BitmapFactory.
 				decodeResource(view.getResources(), R.drawable.pacman4right);
+		
+		resizeAll();
+    }
+    
+    public void resizeAll(){
+    	for(int i = 0; i < playerImage.length; i++){
+    		for(int j = 0; j < playerImage[i].length; j++){
+    			playerImage[i][j] = resize(playerImage[i][j]);
+    		}
+    	}
+    	
+    	for(int i = 0; i < monsterImage.length; i++){
+    		monsterImage[i] = resize(monsterImage[i]);
+    	}
     }
 
     /**
@@ -148,6 +156,7 @@ public class ImageLoader {
         int dirIndex = dir.ordinal();
         bm = playerImage[dirIndex][anim % playerAnimationCount()];
         assert bm != null;
+        Log.i("Image Loader", "returning player bm " + anim + " " + playerAnimationCount() + " "+ dir.ordinal());
         return bm;
     }
 
@@ -166,19 +175,23 @@ public class ImageLoader {
      * @param im The image
      * @return The resized image.
      */
-    /*
-    Bitmap resize(Bitmap im) {
-        assert im != null;
-        Bitmap result = im;
-        if (width > 0 && height > 0) {
-            int w = im.getWidth(null);        
-            int h = im.getHeight(null);
-            if (w != width || h != height) {
-                result = im.getScaledInstance(width, height, java.awt.Image.SCALE_DEFAULT);
-            }
-        }
-        assert result != null;
-        return result;
+    
+    Bitmap resize(Bitmap bm) {
+    	Log.i("Image Loader", "resizing bm");
+        if(bm != null){
+        	  bm.getWidth();
+              bm.getHeight();
+              Bitmap result = bm;
+              if (width > 0 && height > 0) {
+              	Log.i("Image Loader", "creating scaled bm");
+              	result = Bitmap.createScaledBitmap(bm, width, height, false);
+              	Log.i("Image Loader", "created scaled bm");
+              }
+              
+              return result;
+        }      
+       
+        return bm;
     }
-    */
+    
 }
