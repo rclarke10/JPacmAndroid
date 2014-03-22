@@ -77,6 +77,13 @@ public class ImageLoader {
 		
 		playerImage = new Bitmap[Direction.values().length][sequence.length + 1];
 		
+		for(Direction d: Direction.values()){
+			int dir = d.ordinal();
+			playerImage[dir][0] = BitmapFactory.
+					decodeResource(view.getResources(), R.drawable.pacman1);
+		}
+		
+		
 		playerImage[Direction.DOWN.ordinal()][2] = BitmapFactory.
 				decodeResource(view.getResources(), R.drawable.pacman2down);
 		playerImage[Direction.DOWN.ordinal()][3] = BitmapFactory.

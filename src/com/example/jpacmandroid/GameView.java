@@ -5,6 +5,7 @@ import org.jpacman.framework.model.Player;
 import org.jpacman.framework.model.Sprite;
 import org.jpacman.framework.model.IBoardInspector.SpriteType;
 import org.jpacman.framework.view.ImageLoader;
+
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -12,6 +13,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 
 public class GameView extends View{
@@ -19,12 +21,12 @@ public class GameView extends View{
 	 /**
      * Width of an individual cell, in pixels.
      */
-    private static final int CELL_WIDTH = 20;
+    private static final int CELL_WIDTH = 30;
 
     /**
      * Height of an individual cell, in pixels.
      */
-    private static final int CELL_HEIGHT = 20;
+    private static final int CELL_HEIGHT = 30;
 
     /**
      * The horizontal gap between cells, in pixels.
@@ -75,7 +77,7 @@ public class GameView extends View{
 	
 	
 	public void drawCells(Canvas canvas){
-		final float strokeWidth = 5.0f;
+		final float strokeWidth = 3.0f;
 		paint.setStrokeWidth(strokeWidth);
 		
 		for (int x = 0; x < worldWidth(); x++) {
@@ -87,16 +89,21 @@ public class GameView extends View{
 	
 	private void drawCell(Canvas canvas, int x, int y) {
 		int fillColor = spriteColor(x, y);
+		
         int startx = 2 * CELL_HGAP + (CELL_WIDTH + CELL_HGAP) * x;
         int starty = 2 * CELL_VGAP + (CELL_HEIGHT + CELL_VGAP) * y;
  
-        Rect fullCell = fullArea(startx, starty);        
-        paint.setColor(Color.BLUE);
+        Rect fullCell = fullArea(startx, starty);
+        
+        paint.setStyle(Paint.Style.FILL_AND_STROKE);
+        paint.setColor(fillColor);
         canvas.drawRect(fullCell, paint);
+        
+        paint.setColor(Color.BLUE);
         paint.setStyle(Paint.Style.STROKE);
-        paint.setColor(Color.RED);
         canvas.drawRect(fullCell, paint);
         paint.setStyle(Paint.Style.FILL_AND_STROKE);
+        
         
         if (boardInspector.spriteTypeAt(x, y) == SpriteType.FOOD) {
         	Rect centeredCell = centeredArea(startx, starty, 2);
@@ -104,47 +111,18 @@ public class GameView extends View{
         	canvas.drawRect(fullCell, paint);
         	paint.setColor(Color.RED);
         	canvas.drawRect(centeredCell, paint);
-     
+        	
         }
         
       	Bitmap bm = spriteBitmap(boardInspector.spriteAt(x, y));
         if (bm != null) {
         	canvas.drawBitmap(bm, startx, starty, paint);
-        }   
+        }else{
+        	Log.i("game view", "bitmap is null");
+        }
       
  	}
    
-    /**
-     * The width of the board viewer in pixels.
-     *
-     * @return The width of the board viewer.
-     */
-    public final int windowWidth() {
-        return (CELL_WIDTH + CELL_HGAP) * (worldWidth() + 1);
-    }
-
-    /**
-     * The height of the board viewer in pixels.
-     *
-     * @return The height of the board viewer.
-     */
-    public final int windowHeight() {
-        return (CELL_HEIGHT + CELL_VGAP) * (worldHeight() + 1);
-    }
-
-    /**
-     * @return The board height measured in cells, >= 0.
-     */  
-	private int worldHeight() {
-		return boardInspector.getHeight();
-	}
-
-	 /**
-     * @return The board width measured in cells, >= 0.
-     */
-	private int worldWidth() {
-		return boardInspector.getWidth();
-	}
 	
 	private Rect fullArea(int startx, int starty) {
 		Rect rect = new Rect(startx, starty, startx + CELL_WIDTH, starty + CELL_HEIGHT);
@@ -197,16 +175,20 @@ public class GameView extends View{
 	 * @return A Bitmap for this sprite.
 	 */
     private Bitmap spriteBitmap(Sprite sprite) {
+    	
         Bitmap bm = null;
         if (imageLoader != null && sprite != null) {
             if (sprite instanceof Player) {
                 bm = imageLoader.player(
                 		((Player) sprite).getDirection(),
                         animationCount);
+                Log.i("sprite", "player");
             }
             if (sprite.getSpriteType() == SpriteType.GHOST) { 
                  bm = imageLoader.monster(animationCount);
             }
+        }else{
+        	Log.i("sprite", "null");
         }
         return bm;
     }
@@ -220,5 +202,37 @@ public class GameView extends View{
         }
     }
 	
+
+    /**
+     * The width of the board viewer in pixels.
+     *
+     * @return The width of the board viewer.
+     */
+    public final int windowWidth() {
+        return (CELL_WIDTH + CELL_HGAP) * (worldWidth() + 1);
+    }
+
+    /**
+     * The height of the board viewer in pixels.
+     *
+     * @return The height of the board viewer.
+     */
+    public final int windowHeight() {
+        return (CELL_HEIGHT + CELL_VGAP) * (worldHeight() + 1);
+    }
+
+    /**
+     * @return The board height measured in cells, >= 0.
+     */  
+	private int worldHeight() {
+		return boardInspector.getHeight();
+	}
+
+	 /**
+     * @return The board width measured in cells, >= 0.
+     */
+	private int worldWidth() {
+		return boardInspector.getWidth();
+	}
 	
 }

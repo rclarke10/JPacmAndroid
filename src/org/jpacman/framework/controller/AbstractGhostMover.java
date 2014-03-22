@@ -2,15 +2,17 @@ package org.jpacman.framework.controller;
 
 //import java.awt.event.ActionEvent;
 //import java.awt.event.ActionListener;
-import android.view.MotionEvent;
 import java.util.List;
 import java.util.Random;
-
 //import javax.swing.Timer;
 import java.util.Timer;
 import java.util.TimerTask;
+
 import org.jpacman.framework.model.Ghost;
 import org.jpacman.framework.model.IGameInteractor;
+
+import android.util.Log;
+import android.view.MotionEvent;
 
 /**
  * A controller which generates a ghost move at regular intervals. The actual
@@ -67,9 +69,11 @@ IController {
     public AbstractGhostMover(IGameInteractor game) {
         theGame = game;
        // timer = new Timer(DELAY, this);
-
+        Log.i("abstract", "creating timer");
         timer = new Timer();
-        timer.schedule(myTimer,DELAY);
+        Log.i("abstract", "creating schedule");
+        timer.schedule(new RemindTask(),DELAY);
+        Log.i("abstract", "creat timer");
         assert controllerInvariant();
     }
 
@@ -103,7 +107,7 @@ IController {
         synchronized (theGame) {
             ghosts = theGame.getGhosts();
             //timer.start();
-            myTimer.run();
+           // myTimer.run();
             assert ghosts != null;
         }
         assert controllerInvariant();
@@ -113,7 +117,7 @@ IController {
 	public void stop() {
         assert controllerInvariant();
         //timer.stop();
-        myTimer.cancel();
+       // myTimer.cancel();
         assert controllerInvariant();
     }
 

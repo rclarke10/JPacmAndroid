@@ -178,14 +178,21 @@ public class MapParser {
     private String[] getMap(String fileName) throws FactoryException {
         assert fileName != null;
         Log.i("Map Parser", "get map entered");
-        String file = "raw/board.txt"; // res/raw/test.txt also work.
+        String file = "res/raw/board.txt"; // res/raw/test.txt also work.
         Log.i("Map Parser", "Reading file");
         InputStream in = this.getClass().getClassLoader().getResourceAsStream(file);
-        in.
+
+        if(in == null){
+        	Log.i("Map Parser", "in is null");
+        }
+        
         Log.i("Map Parser", "got file");
         BufferedReader br = null;
-		Log.i("Map Parser", "creating bufferedreader");
+		Log.i("Map Parser", "creating inputstreamreader");
+		in.toString();
+		Log.i("Map Parser", "to string passed");
 		InputStreamReader isr = new InputStreamReader(in);
+		Log.i("Map Parser", "created inputstreawmreader");
 		br = new BufferedReader(isr);
 		Log.i("Map Parser", "created bufferedreader");
 		if(br == null){

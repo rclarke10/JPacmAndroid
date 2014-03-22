@@ -19,6 +19,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.TextView;
 
 public class Main extends Activity implements Observer {
 
@@ -43,8 +44,8 @@ public class Main extends Activity implements Observer {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-				WindowManager.LayoutParams.FLAG_FULLSCREEN);
-		
+				WindowManager.LayoutParams.FLAG_FULLSCREEN);		
+
 		setContentView(R.layout.activity_main);
 	
 		level = new Level();
@@ -66,6 +67,8 @@ public class Main extends Activity implements Observer {
 	public void onStartClick(View view) {
 		setDirection(START);
 		buttonPanel.start();
+		TextView num_points_textview = (TextView) findViewById(R.id.num_points_text);
+		num_points_textview.setText(getGame().getPointManager().getFoodEaten() + "/" + getGame().getPointManager().totalFoodInGame());
 	}
 	
 	/*
@@ -74,6 +77,8 @@ public class Main extends Activity implements Observer {
 	public void onStopClick(View view) {
 		setDirection(STOP);
 		buttonPanel.pause();
+		TextView num_points_textview = (TextView) findViewById(R.id.num_points_text);
+		num_points_textview.setText(getGame().getPointManager().getFoodEaten() + "/" + getGame().getPointManager().totalFoodInGame());
 	}
 	
 	/*
@@ -81,6 +86,8 @@ public class Main extends Activity implements Observer {
 	 */
 	public void onUpClick(View view) {
 		setDirection(UP);
+		TextView num_points_textview = (TextView) findViewById(R.id.num_points_text);
+		num_points_textview.setText(getGame().getPointManager().getFoodEaten() + "/" + getGame().getPointManager().totalFoodInGame());
 	}
 	
 	/*
@@ -88,6 +95,8 @@ public class Main extends Activity implements Observer {
 	 */
 	public void onDownClick(View view) {
 		setDirection(DOWN);
+		TextView num_points_textview = (TextView) findViewById(R.id.num_points_text);
+		num_points_textview.setText(getGame().getPointManager().getFoodEaten() + "/" + getGame().getPointManager().totalFoodInGame());
 	}
 	
 	/*
@@ -95,6 +104,8 @@ public class Main extends Activity implements Observer {
 	 */
 	public void onLeftClick(View view) {
 		setDirection(LEFT);
+		TextView num_points_textview = (TextView) findViewById(R.id.num_points_text);
+		num_points_textview.setText(getGame().getPointManager().getFoodEaten() + "/" + getGame().getPointManager().totalFoodInGame());
 	}
 	
 	/*
@@ -102,6 +113,8 @@ public class Main extends Activity implements Observer {
 	 */
 	public void onRightClick(View view) {
 		setDirection(RIGHT);
+		TextView num_points_textview = (TextView) findViewById(R.id.num_points_text);
+		num_points_textview.setText(getGame().getPointManager().getFoodEaten() + "/" + getGame().getPointManager().totalFoodInGame());
 	}
 	
 	private static int direction = 0;
@@ -232,7 +245,11 @@ public class Main extends Activity implements Observer {
     	theGame = createModel();
     	Log.i("init", "CreadModel Passed");
         getGame().attach(this);
+        Log.i("init", "Attached to getGame()");
+        getGame();
+        Log.i("init", "getGame() passed");
         withGhostController(new RandomGhostMover(getGame()));
+        Log.i("init", "trying CreateUI");
       	createUI();
       	Log.i("init", "CreateUI passed");
       	gv.setBoardInspector(theGame.getBoardInspector());
@@ -276,8 +293,11 @@ public class Main extends Activity implements Observer {
 	 * @return Itself for fluency.
 	 */
 	public Main withGhostController(IController gc) {
+		Log.i("withGhost", "trying assert");
 		assert gc != null;
+		Log.i("withGhost", "assert passed");
 		ghostController = gc;
+		Log.i("withGhost", "ghostControll = gc passed");
 		return this;
 	}
 	

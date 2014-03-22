@@ -1,8 +1,10 @@
 package org.jpacman.framework.controller;
 
+import org.jpacman.framework.model.Direction;
 import org.jpacman.framework.model.Ghost;
 import org.jpacman.framework.model.IGameInteractor;
-import org.jpacman.framework.model.Direction;
+
+import android.util.Log;
 
 
 /**
@@ -19,6 +21,8 @@ public class RandomGhostMover extends AbstractGhostMover {
      */
     public RandomGhostMover(final IGameInteractor theEngine) {
         super(theEngine);
+        Log.i("rand", "after super");
+        
     }
 
     /**
