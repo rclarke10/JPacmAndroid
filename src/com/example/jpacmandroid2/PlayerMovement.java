@@ -55,7 +55,6 @@ public class PlayerMovement {
 				break;
 			case Sprite.FOOD:
 					board.setSpriteAt(Sprite.EMPTY, oldX, oldY);
-					//board.setSpriteAt(Sprite.EMPTY, oldX-1, oldY);
 				eat();
 				break;
 			case Sprite.WALL:
@@ -88,7 +87,6 @@ public class PlayerMovement {
 				break;
 			case Sprite.FOOD:
 					board.setSpriteAt(Sprite.EMPTY, oldX, oldY);
-				//board.setSpriteAt(Sprite.EMPTY, oldX-1, oldY);
 				eat();
 				break;
 			case Sprite.WALL:
@@ -117,11 +115,9 @@ public class PlayerMovement {
 			switch (board.getSpriteAt(playerX, playerY)) {
 			case Sprite.EMPTY:
 					board.setSpriteAt(Sprite.EMPTY, oldX, oldY);	
-				//board.setSpriteAt(Sprite.EMPTY, oldX, oldY-1);
 				break;
 			case Sprite.FOOD:
 					board.setSpriteAt(Sprite.EMPTY, oldX, oldY);	
-				//board.setSpriteAt(Sprite.EMPTY, oldX, oldY-1);
 				eat();
 				break;
 			case Sprite.WALL:
@@ -150,11 +146,9 @@ public class PlayerMovement {
 			switch (board.getSpriteAt(playerX, playerY)) {
 			case Sprite.EMPTY:
 					board.setSpriteAt(Sprite.EMPTY, oldX, oldY);	
-				//board.setSpriteAt(Sprite.EMPTY, oldX, oldY-1);
 				break;
 			case Sprite.FOOD:
 					board.setSpriteAt(Sprite.EMPTY, oldX, oldY);	
-				//board.setSpriteAt(Sprite.EMPTY, oldX, oldY-1);
 				eat();
 				break;
 			case Sprite.WALL:
