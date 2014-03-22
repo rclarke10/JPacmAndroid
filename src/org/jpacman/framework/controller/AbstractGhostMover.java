@@ -1,7 +1,7 @@
 package org.jpacman.framework.controller;
 
-//import java.awt.event.ActionEvent;
-//import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.List;
 import java.util.Random;
 
@@ -20,9 +20,17 @@ import org.jpacman.framework.model.IGameInteractor;
  *
  * @author Arie van Deursen, 3 September, 2003
  */
-public abstract class AbstractGhostMover extends TimerTask implements
+public abstract class AbstractGhostMover implements
 IController {
-
+	
+	class RemindTask extends TimerTask {
+       @Override
+		public void run() {
+          //  System.out.format("Time's up!%n");
+          //  timer.cancel(); //Terminate the timer thread
+        }
+    }
+	private static RemindTask myTimer;
     /**
      * Randomizer used to pick, e.g., a ghost at random.
      */
@@ -60,7 +68,7 @@ IController {
        // timer = new Timer(DELAY, this);
 
         timer = new Timer();
-        timer.schedule(this,DELAY);
+        timer.schedule(myTimer,DELAY);
         assert controllerInvariant();
     }
 
@@ -93,7 +101,7 @@ IController {
         synchronized (theGame) {
             ghosts = theGame.getGhosts();
             //timer.start();
-            this.run();
+            myTimer.run();
             assert ghosts != null;
         }
         assert controllerInvariant();
@@ -103,7 +111,7 @@ IController {
 	public void stop() {
         assert controllerInvariant();
         //timer.stop();
-        this.cancel();
+        myTimer.cancel();
         assert controllerInvariant();
     }
 
