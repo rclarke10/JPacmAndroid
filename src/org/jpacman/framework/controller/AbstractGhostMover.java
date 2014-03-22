@@ -1,12 +1,13 @@
 package org.jpacman.framework.controller;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+//import java.awt.event.ActionEvent;
+//import java.awt.event.ActionListener;
 import java.util.List;
 import java.util.Random;
 
-import javax.swing.Timer;
-
+//import javax.swing.Timer;
+import java.util.Timer;
+import java.util.TimerTask;
 import org.jpacman.framework.model.Ghost;
 import org.jpacman.framework.model.IGameInteractor;
 
@@ -19,7 +20,7 @@ import org.jpacman.framework.model.IGameInteractor;
  *
  * @author Arie van Deursen, 3 September, 2003
  */
-public abstract class AbstractGhostMover implements ActionListener,
+public abstract class AbstractGhostMover extends TimerTask implements
 IController {
 
     /**
@@ -56,7 +57,10 @@ IController {
      */
     public AbstractGhostMover(IGameInteractor game) {
         theGame = game;
-        timer = new Timer(DELAY, this);
+       // timer = new Timer(DELAY, this);
+
+        timer = new Timer();
+        timer.schedule(this,DELAY);
         assert controllerInvariant();
     }
 
@@ -88,7 +92,8 @@ IController {
         // contained.
         synchronized (theGame) {
             ghosts = theGame.getGhosts();
-            timer.start();
+            //timer.start();
+            this.run();
             assert ghosts != null;
         }
         assert controllerInvariant();
@@ -97,7 +102,8 @@ IController {
     @Override
 	public void stop() {
         assert controllerInvariant();
-        timer.stop();
+        //timer.stop();
+        this.cancel();
         assert controllerInvariant();
     }
 
