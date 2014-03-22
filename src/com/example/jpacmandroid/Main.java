@@ -15,6 +15,7 @@ import org.jpacman.framework.view.Animator;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -27,23 +28,35 @@ public class Main extends Activity implements Observer {
      */
     private Level level;
     
+    GameView gv;
+    
 	/*
 	 * On creation of activity, create a full screen activity
 	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		Log.i("Main", "onCreate entered");
 		super.onCreate(savedInstanceState);
+			
+	
 		// Make full screen
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
+		
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 				WindowManager.LayoutParams.FLAG_FULLSCREEN);
-		setContentView(R.layout.activity_main);
 		
+		setContentView(R.layout.activity_main);
+	
 		level = new Level();
+		gv = (GameView)findViewById(R.id.gameView1);
+		
 		try {
 			main();
 		} catch (FactoryException e) {
+			Log.i("Main", "Factory Exception");
 			//ignore problems
+		} catch(RuntimeException e){
+			Log.i("Main", "Runtime Exception");
 		}
 	}
 	
@@ -215,10 +228,14 @@ public class Main extends Activity implements Observer {
 	 * @return The main UI object.
 	 */
     public Main initialize() throws FactoryException {
-        theGame = createModel();
+    	Log.i("init", "CreadModel");
+    	theGame = createModel();
+    	Log.i("init", "CreadModel Passed");
         getGame().attach(this);
         withGhostController(new RandomGhostMover(getGame()));
       	createUI();
+      	Log.i("init", "CreateUI passed");
+      	gv.setBoardInspector(theGame.getBoardInspector());
       	return this;
     }
     	
@@ -318,7 +335,5 @@ public class Main extends Activity implements Observer {
 		initialize();
 		start();
 	}
-	
-
 
 }

@@ -4,12 +4,19 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.jpacman.framework.model.Board;
 import org.jpacman.framework.model.Game;
 import org.jpacman.framework.model.Sprite;
+
+import android.util.Log;
+import android.view.View;
+
+import com.example.jpacmandroid.Main;
+import com.example.jpacmandroid.R;
 
 /**
  * Turn a textual ASCII board representation into an
@@ -170,8 +177,21 @@ public class MapParser {
      */
     private String[] getMap(String fileName) throws FactoryException {
         assert fileName != null;
-        BufferedReader br = 
-                new BufferedReader(new InputStreamReader(getResourceStream(fileName)));
+        Log.i("Map Parser", "get map entered");
+        String file = "raw/board.txt"; // res/raw/test.txt also work.
+        Log.i("Map Parser", "Reading file");
+        InputStream in = this.getClass().getClassLoader().getResourceAsStream(file);
+        in.
+        Log.i("Map Parser", "got file");
+        BufferedReader br = null;
+		Log.i("Map Parser", "creating bufferedreader");
+		InputStreamReader isr = new InputStreamReader(in);
+		br = new BufferedReader(isr);
+		Log.i("Map Parser", "created bufferedreader");
+		if(br == null){
+			Log.i("Map Parser", "BR is null");
+		}
+
         return getMap(br);
     }
     

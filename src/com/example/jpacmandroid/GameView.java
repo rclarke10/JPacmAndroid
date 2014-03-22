@@ -39,7 +39,7 @@ public class GameView extends View{
     /**
      * Representation of the actual board.
      */
-    private final IBoardInspector boardInspector;
+    private IBoardInspector boardInspector;
     
     /**
      * The manager keeping track of images.
@@ -53,9 +53,13 @@ public class GameView extends View{
         
 	Paint paint;	
 	
-	public GameView(Context context, AttributeSet attributeSet, IBoardInspector board){
+	
+	public void setBoardInspector(IBoardInspector ibs){
+		this.boardInspector = ibs;
+	}
+	
+	public GameView(Context context, AttributeSet attributeSet){
 		super(context, attributeSet);
-		boardInspector = board;
     	imageLoader = new ImageLoader(CELL_WIDTH, CELL_HEIGHT,this);       
         imageLoader.loadImages();
 	}	
@@ -103,7 +107,7 @@ public class GameView extends View{
      
         }
         
-       	Bitmap bm = spriteBitmap(boardInspector.spriteAt(x, y));
+      	Bitmap bm = spriteBitmap(boardInspector.spriteAt(x, y));
         if (bm != null) {
         	canvas.drawBitmap(bm, startx, starty, paint);
         }   
@@ -148,8 +152,7 @@ public class GameView extends View{
 	}
 	
 	private Rect centeredArea(int startx, int starty, int radius) {
-		assert radius <= CELL_WIDTH / 2;
-		
+		assert radius <= CELL_WIDTH / 2;		
 		
 		int x = startx + CELL_WIDTH / 2 - radius;
 		int y = starty + CELL_HEIGHT / 2 - radius;
@@ -185,6 +188,7 @@ public class GameView extends View{
 		default:
 			assert false : "No other Sprite Types " + st;
 		}
+		
 		return c;
 	}
 	
