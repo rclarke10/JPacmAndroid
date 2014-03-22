@@ -1,7 +1,8 @@
 package org.jpacman.framework.controller;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+//import java.awt.event.ActionEvent;
+//import java.awt.event.ActionListener;
+import android.view.MotionEvent;
 import java.util.List;
 import java.util.Random;
 
@@ -84,8 +85,9 @@ IController {
      * ActionListener event caught when timer ticks.
      * @param e Event caught.
      */
-    @Override
-	public void actionPerformed(ActionEvent e) {
+  //  @Override
+	//public void actionPerformed(MotionEvent e) {
+    public void actionPerformed(MotionEvent e) {
         assert controllerInvariant();
         synchronized (theGame) {
             doTick();
