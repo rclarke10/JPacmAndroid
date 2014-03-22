@@ -60,18 +60,21 @@ public class GhostMovement {
 	/*
 	 * Constructor
 	 */
-	public GhostMovement(int numGhosts, Board board, Draw draw, State state) {
-		this.numGhosts = numGhosts;
+	public GhostMovement(Board board, Draw draw, State state) {
+		Log.i("gm","beginning of gm constructor");
+		this.numGhosts = board.getNumGhosts();
 		Timer timer = new Timer();
 		GhostTimerTask gt = new GhostTimerTask();
 		this.draw = draw;
 		this.state = state;
-
+		
+		Log.i("gm","before ghost x,y sent");
 		for (int i = 0; i < numGhosts; i++) {
 			ghostX[i] = board.getGhostX(i);
 			ghostY[i] = board.getGhostY(i);
 		}
 		timer.schedule(gt, GHOST_MOVE_DELAY, GHOST_MOVE_DELAY);
+		Log.i("ghost", "timer created");
 	}
 
 	public class GhostTimerTask extends TimerTask {
@@ -79,7 +82,7 @@ public class GhostMovement {
 		public void run() {
 			for (int i = 0; i < numGhosts; i++) {
 				dir = random.nextInt(4) + 1;
-				Log.i("ghost","direction: " + dir);
+				Log.i("gm","direction: " + dir);
 				moveGhost(i, dir);
 			}
 
