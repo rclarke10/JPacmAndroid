@@ -91,7 +91,9 @@ public class GhostMovement {
 		
 		switch (dir) {
 		case UP:
-			if (validMove(i, ghostX[i], ghostY[i] - 1)) {
+			if(ghostY[i] - 1 < 0){
+				//do nothing
+			}else if (validMove(i, ghostX[i], ghostY[i] - 1)) {
 				board.setSpriteAt(currSprite[i], ghostX[i], ghostY[i]);
 				ghostY[i]--;
 				nextSprite[i] = board.getSpriteAt(ghostX[i], ghostY[i]);
@@ -102,7 +104,9 @@ public class GhostMovement {
 			}
 			break;
 		case DOWN:
-			if (validMove(i, ghostX[i], ghostY[i] + 1)) {
+			if(ghostY[i] + 1 >= board.getHeight()){
+				//do nothing
+			}else if (validMove(i, ghostX[i], ghostY[i] + 1)) {
 				board.setSpriteAt(currSprite[i], ghostX[i], ghostY[i]);
 				ghostY[i]++;
 				nextSprite[i] = board.getSpriteAt(ghostX[i], ghostY[i]);
@@ -114,7 +118,9 @@ public class GhostMovement {
 			break;
 
 		case LEFT:
-			if (validMove(i, ghostX[i] - 1, ghostY[i])) {
+			if(ghostX[i] - 1 < 0){
+			//do nothing
+			}else if (validMove(i, ghostX[i] - 1, ghostY[i])) {
 				board.setSpriteAt(currSprite[i], ghostX[i], ghostY[i]);
 				ghostX[i]--;
 				nextSprite[i] = board.getSpriteAt(ghostX[i], ghostY[i]);
@@ -126,7 +132,9 @@ public class GhostMovement {
 			break;
 
 		case RIGHT:
-			if (validMove(i, ghostX[i] + 1, ghostY[i])) {
+			if(ghostX[i] + 1 >= board.getWidth()){
+				//do nothing
+			}else if (validMove(i, ghostX[i] + 1, ghostY[i])) {
 				
 				board.setSpriteAt(currSprite[i], ghostX[i], ghostY[i]);
 				ghostX[i]++;
