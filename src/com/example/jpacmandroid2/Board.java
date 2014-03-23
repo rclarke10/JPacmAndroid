@@ -19,22 +19,22 @@ public class Board {
 	};
 		
 	
-	private static int width = 23;
-	private static int height = 21;
+	private static int width;
+	private static int height;
 	
 	
 	/*
 	 * Board Array
 	 */
 
-	private Tile board[][] = new Tile[width][height];
+	private Tile board[][];
 	
 	
 	/*
 	 * Player starting position. For default game this is (11,15)
 	 */
-	private int playerStartX = 11;
-	private int playerStartY = 15;
+	private int playerStartX;
+	private int playerStartY;
 	
 	/*
 	 * Ghost position holder
@@ -62,6 +62,8 @@ public class Board {
 	 */
 	public Board(Game game) {
 		this.game = game;
+		getBoardSize();
+		board = new Tile[width][height];
 		boardParser();
 	}
 	
@@ -115,6 +117,7 @@ public class Board {
 						totalScore += 10;
 					} else if (token == Sprite.PACMAN_SYM) {
 						board[x][y] = new Tile(x,y, new Player());
+						
 						//initialize player starting position
 						playerStartX = x;
 						playerStartY = y;
@@ -129,7 +132,7 @@ public class Board {
 				}
 			}
 			
-			board[11][15] = new Tile(11,15, new Player());
+			board[playerStartX][playerStartY] = new Tile(playerStartX, playerStartY, new Player());
 			
 			// close file
 			br.close();
@@ -141,6 +144,24 @@ public class Board {
 			Log.i("board", "IOException");
 		}
 
+	}
+	
+	public void getBoardSize(){
+		try {
+			BufferedReader br = new BufferedReader(new InputStreamReader(game
+					.getAssets().open("board.txt")));
+			
+			width = br.readLine().length();
+			while(br.readLine() != null){
+				height ++;
+			}
+			height++;
+			
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	/*

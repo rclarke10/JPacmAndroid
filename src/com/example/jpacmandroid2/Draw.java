@@ -13,8 +13,7 @@ import android.view.View;
 
 public class Draw extends View {
 	
-	private static final int H = 21;
-	private static final int W = 23;
+
 	
 	 /**
      * Width of an individual cell, in pixels.
@@ -49,6 +48,9 @@ public class Draw extends View {
     private int cellHeight;
     private int cellWidth;
     
+    private int boardWidth;
+    private int boardHeight;
+    
     private Board board;
     
 	Paint paint;	
@@ -57,6 +59,8 @@ public class Draw extends View {
 	
 	public void setBoard(Board b){
 		board = b;
+		boardWidth = board.getWidth();
+		boardHeight = board.getHeight();
 	}
 
 	public Draw(Context context, AttributeSet attribute_set) {
@@ -75,8 +79,8 @@ public class Draw extends View {
 			 viewWidth = this.getWidth();
 			 viewHeight = this.getHeight();
 			 
-			 cellWidth = viewWidth/W;
-			 cellHeight = viewHeight/H;
+			 cellWidth = viewWidth/boardWidth;
+			 cellHeight = viewHeight/boardHeight;
 			 
 			 imageLoader.setWidth(cellWidth);
 			 imageLoader.setHeight(cellHeight);
@@ -243,12 +247,12 @@ public class Draw extends View {
 		return board.getWidth();
 	}
 	
-	private Tile spriteArray[][] = new Tile[23][21];
+	private Tile spriteArray[][] = new Tile[boardWidth][boardHeight];
 	
 	public void setSpriteArray(Tile[][] tiles){
 		
-		for(int x = 0; x < 23; x++){
-			for(int y = 0; y < 21; y++){
+		for(int x = 0; x < boardWidth; x++){
+			for(int y = 0; y < boardHeight; y++){
 				this.spriteArray[x][y] = tiles[x][y];	
 			}
 		}

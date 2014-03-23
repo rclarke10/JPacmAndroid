@@ -15,7 +15,7 @@ public class Sprite {
 	/*
 	 * Symbols used in .txt files to draw board
 	 */
-	public static final char PACMAN_SYM = 'p';
+	public static final char PACMAN_SYM = 'P';
 	public static final char GHOST_SYM = 'G';
 	public static final char EMPTY_SYM = ' ';
 	public static final char FOOD_SYM = '.';
