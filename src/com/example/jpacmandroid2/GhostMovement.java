@@ -48,31 +48,19 @@ public class GhostMovement {
 	private int dir;
 
 	/*
-	 * Draw holder
-	 */
-	private Draw draw;
-
-	/*
 	 * State holder
 	 */
 	private State state;
 
 	/*
-	 * Current game instance
-	 */
-	private Game game;
-
-	/*
 	 * Constructor
 	 */
-	public GhostMovement(Board board, Draw draw, State state, Game game) {
+	public GhostMovement(Board board, Draw draw, State state) {
 		this.board = board;
 		// Log.i("gmm", "beginning of gm constructor");
 		this.numGhosts = board.getNumGhosts();
-		this.game = game;
 		Timer timer = new Timer();
 		GhostTimerTask gt = new GhostTimerTask();
-		this.draw = draw;
 		this.state = state;
 
 		// Log.i("gmm", "before ghost x,y sent");

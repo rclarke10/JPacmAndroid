@@ -29,6 +29,7 @@ public class Game extends Activity {
 	/*
 	 * Ghostmovement
 	 */
+	@SuppressWarnings("unused")
 	private GhostMovement gm;
 	
 	/*
@@ -62,7 +63,7 @@ public class Game extends Activity {
 		score = new Score(board.getTotalScore(), state, this);
 		draw.setSpriteArray(board.getBoard());
 		draw.setBoard(board);
-		//gm = new GhostMovement(board, draw, state);
+		gm = new GhostMovement(board, draw, state);
 		pm = new PlayerMovement(board, state, score, draw);
 		
 		Log.i("sPOS","x:"+Integer.toString(board.startX()));
