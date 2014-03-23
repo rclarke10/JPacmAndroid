@@ -55,7 +55,7 @@ public class Score {
 	 * Displays the score on the score TextView
 	 */
 	private void displayScore(){
-		scoreString = "Score: "+this.getScore()+"/"+this.getTotalScore();
+		scoreString = this.getScore()+"/"+this.getTotalScore();
 
 		
 		TextView s = (TextView) game.findViewById(R.id.score);
