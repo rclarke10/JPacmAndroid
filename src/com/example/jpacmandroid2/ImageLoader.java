@@ -76,33 +76,33 @@ public class ImageLoader {
 		}
 		
 		
+		playerImage[Direction.DOWN.ordinal()][1] = BitmapFactory.
+				decodeResource(view.getResources(), R.drawable.pacman2down);
 		playerImage[Direction.DOWN.ordinal()][2] = BitmapFactory.
-				decodeResource(view.getResources(), R.drawable.pacman2down);
+				decodeResource(view.getResources(), R.drawable.pacman3down);
 		playerImage[Direction.DOWN.ordinal()][3] = BitmapFactory.
-				decodeResource(view.getResources(), R.drawable.pacman2down);
-		playerImage[Direction.DOWN.ordinal()][4] = BitmapFactory.
-				decodeResource(view.getResources(), R.drawable.pacman2down);
+				decodeResource(view.getResources(), R.drawable.pacman4down);
 		
 
-		playerImage[Direction.UP.ordinal()][2] = BitmapFactory.
+		playerImage[Direction.UP.ordinal()][1] = BitmapFactory.
 				decodeResource(view.getResources(), R.drawable.pacman2up);
-		playerImage[Direction.UP.ordinal()][3] = BitmapFactory.
+		playerImage[Direction.UP.ordinal()][2] = BitmapFactory.
 				decodeResource(view.getResources(), R.drawable.pacman3up);
-		playerImage[Direction.UP.ordinal()][4] = BitmapFactory.
+		playerImage[Direction.UP.ordinal()][3] = BitmapFactory.
 				decodeResource(view.getResources(), R.drawable.pacman4up);
 		
-		playerImage[Direction.LEFT.ordinal()][2] = BitmapFactory.
+		playerImage[Direction.LEFT.ordinal()][1] = BitmapFactory.
 				decodeResource(view.getResources(), R.drawable.pacman2left);
-		playerImage[Direction.LEFT.ordinal()][3] = BitmapFactory.
+		playerImage[Direction.LEFT.ordinal()][2] = BitmapFactory.
 				decodeResource(view.getResources(), R.drawable.pacman3left);
-		playerImage[Direction.LEFT.ordinal()][4] = BitmapFactory.
+		playerImage[Direction.LEFT.ordinal()][3] = BitmapFactory.
 				decodeResource(view.getResources(), R.drawable.pacman4left);
 		
-		playerImage[Direction.RIGHT.ordinal()][2] = BitmapFactory.
+		playerImage[Direction.RIGHT.ordinal()][1] = BitmapFactory.
 				decodeResource(view.getResources(), R.drawable.pacman2right);
-		playerImage[Direction.RIGHT.ordinal()][3] = BitmapFactory.
+		playerImage[Direction.RIGHT.ordinal()][2] = BitmapFactory.
 				decodeResource(view.getResources(), R.drawable.pacman3right);
-		playerImage[Direction.RIGHT.ordinal()][4] = BitmapFactory.
+		playerImage[Direction.RIGHT.ordinal()][3] = BitmapFactory.
 				decodeResource(view.getResources(), R.drawable.pacman4right);
 		
 		resizeAll();
@@ -152,7 +152,7 @@ public class ImageLoader {
         assert anim >= 0;
         Bitmap bm = null;
         int dirIndex = dir.ordinal();
-        bm = playerImage[dirIndex][anim % playerAnimationCount()];
+        bm = playerImage[dirIndex][anim % 4];
         assert bm != null;
         Log.i("Image Loader", "returning player bm " + anim + " " + playerAnimationCount() + " "+ dir.ordinal());
         return bm;

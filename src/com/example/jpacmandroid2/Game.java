@@ -62,7 +62,7 @@ public class Game extends Activity {
 		score = new Score(board.getTotalScore(), state, this);
 		draw.setSpriteArray(board.getBoard());
 		draw.setBoard(board);
-		gm = new GhostMovement(board, draw, state);
+		//gm = new GhostMovement(board, draw, state);
 		pm = new PlayerMovement(board, state, score, draw);
 		
 		Log.i("sPOS","x:"+Integer.toString(board.startX()));
@@ -90,7 +90,8 @@ public class Game extends Activity {
 	 */
 	public void upClick(View view) {
 		if(state.getState() == State.START){
-			pm.up();
+			pm.move(Direction.UP);
+			//pm.up();
 			draw.invalidate();
 		}
 		Log.i("xy",""+board.getSpriteAt(11, 15));
@@ -101,7 +102,8 @@ public class Game extends Activity {
 	 */
 	public void downClick(View view) {
 		if(state.getState() == State.START){
-			pm.down();
+			pm.move(Direction.DOWN);
+			//pm.down();
 			draw.invalidate();
 		}
 		Log.i("xy",""+board.getSpriteAt(11, 15));
@@ -112,7 +114,9 @@ public class Game extends Activity {
 	 */
 	public void rightClick(View view) {
 		if(state.getState() == State.START){
-			pm.right();			
+			pm.move(Direction.RIGHT);
+			//pm.right();			
+			draw.invalidate();
 		}
 		Log.i("xy",""+board.getSpriteAt(11, 15));
 	}
@@ -122,7 +126,8 @@ public class Game extends Activity {
 	 */
 	public void leftClick(View view) {
 		if(state.getState() == State.START){
-			pm.left();
+			pm.move(Direction.LEFT);
+			//pm.left();
 			draw.invalidate();
 		}
 		Log.i("xy",""+board.getSpriteAt(11, 15));

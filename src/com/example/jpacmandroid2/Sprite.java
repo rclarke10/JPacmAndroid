@@ -1,5 +1,7 @@
 package com.example.jpacmandroid2;
 
+import com.example.jpacmandroid2.Board.SpriteType;
+
 public class Sprite {
 	/*
 	 * Sprite list
@@ -19,9 +21,15 @@ public class Sprite {
 	public static final char FOOD_SYM = '.';
 	public static final char WALL_SYM = '#';
 	
-	/*
-	 * TODO Insert image locations below
-	 */
+	protected Sprite() {
+		
+	}
+	
+	
+	public SpriteType getSpriteType() {
+		return SpriteType.OTHER;
+	}
+	
 
 	
 	

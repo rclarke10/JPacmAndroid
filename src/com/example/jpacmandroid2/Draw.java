@@ -1,5 +1,7 @@
 package com.example.jpacmandroid2;
 
+import com.example.jpacmandroid2.Board.SpriteType;
+
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -87,10 +89,7 @@ public class Draw extends View {
 			 viewInitialized = true;
 		 }
 		 
-		 paint = new Paint();	 			 		
-		
-		 paint.setColor(Color.BLUE);		 
-		 drawCells(canvas);	
+		 drawCells(canvas);
 		
 	}
 	
@@ -116,8 +115,10 @@ public class Draw extends View {
         paint.setStyle(Paint.Style.STROKE);
         paint.setColor(Color.BLUE);
         canvas.drawRect(fullCell, paint);
-        
-        if (board.getSpriteAt(x, y) == Sprite.FOOD) {
+        Log.i("on Draw", "gsta before");
+        board.gsta(x, y);
+        Log.i("on Draw", "gsta after");
+        if (board.gsta(x,y) == SpriteType.FOOD) {
         	paint.setStyle(Paint.Style.FILL);
         	Rect centeredCell = centeredArea(startx, starty, 2);
         	paint.setColor(Color.BLACK);
@@ -131,8 +132,13 @@ public class Draw extends View {
         	canvas.drawRect(fullCell, paint);
         }
         
-      	Bitmap bm = spriteBitmap(board.getSpriteAt(x, y));
+        if(x == 11 && y == 15){
+        	Log.i("player", "PLARRR");
+        }
+        
+      	Bitmap bm = spriteBitmap(board.gsa(x,y));
         if (bm != null) {
+        	Log.i("player", board.gsa(x, y).toString());
         	canvas.drawBitmap(bm, startx, starty, paint);       	
         }else{
         	Log.i("game view", "bitmap is null");
@@ -159,20 +165,23 @@ public class Draw extends View {
 	
 	
 	private int spriteColor(int x, int y) {
-		int st = board.getSpriteAt(x, y);
+		SpriteType st = board.gsta(x, y);
 
-		int c = Color.YELLOW;
+		int c = Color.GRAY;
 		switch(st){
-		case Sprite.GHOST:
+		case GHOST:
 			c = Color.BLACK;
 			break;
-		case Sprite.PACMAN:
+		case PLAYER:
 			c = Color.BLACK;
 			break;
-		case Sprite.WALL:
+		case WALL:
 			c = Color.GREEN;
 			break;
-		case Sprite.EMPTY:
+		case EMPTY:
+			c = Color.GRAY;
+			break;
+		case OTHER:
 			c = Color.GRAY;
 			break;
 		}
@@ -181,19 +190,19 @@ public class Draw extends View {
 	}
 	
 	/**
-	 * @param i
+	 * @param sprite.getSpriteType()
 	 * @return A Bitmap for this sprite.
 	 */
-    private Bitmap spriteBitmap(int i) {
-    	
+    private Bitmap spriteBitmap(Sprite sprite) {
+    	Log.i("sprite", sprite.getSpriteType().toString());
         Bitmap bm = null;
-        if (imageLoader != null && i != Sprite.EMPTY) {
-            if (i == Sprite.PACMAN) {
-            	bm = imageLoader.player(Direction.DOWN, 0);
-
-                Log.i("sprite", "player");
+        if (imageLoader != null && sprite.getSpriteType() != SpriteType.EMPTY) {
+            if (sprite.getSpriteType() == SpriteType.PLAYER) {
+            	Log.i("player", "player");
+            	bm = imageLoader.player(((Player) sprite).getDirection(), animationCount);
+                nextAnimation();
             }
-            if (i == Sprite.GHOST) { 
+            if (sprite.getSpriteType() == SpriteType.GHOST) { 
                  bm = imageLoader.monster(animationCount);
             }
         }
@@ -201,6 +210,7 @@ public class Draw extends View {
     }
     
     public void nextAnimation() {
+    	Log.i("animation", "nextAnimation");
         if (imageLoader != null) {
             animationCount = (animationCount + 1)
             % (imageLoader.monsterAnimationCount()

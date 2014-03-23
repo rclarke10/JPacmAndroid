@@ -1,6 +1,7 @@
 package com.example.jpacmandroid2;
 
 import android.util.Log;
+import com.example.jpacmandroid2.Board.SpriteType;
 
 public class PlayerMovement {
 
@@ -42,133 +43,55 @@ public class PlayerMovement {
 	private int playerY;
 	private int oldX;
 	private int oldY;
-
 	
-	public void up() {
-		try {
+	public void move(Direction dir){
+		try{
+			Player player = (Player) board.gsa(playerX, playerY);
+			player.setDirection(dir);
 			oldX = playerX;
 			oldY = playerY;
-			playerY--;
-			switch (board.getSpriteAt(playerX, playerY)) {
-			case Sprite.EMPTY:
-				board.setSpriteAt(Sprite.EMPTY, oldX, oldY);
+			playerX += dir.getDx();
+			playerY += dir.getDy();
+			
+			if(playerX < 0){
+				playerX = board.getWidth() - 1;
+			}
+			if(playerX >= board.getWidth()){
+				playerX = 0;
+			}
+			
+			switch(board.gsta(playerX, playerY)){
+			case EMPTY:
+				board.ssa(new Sprite(), oldX, oldY);
 				break;
-			case Sprite.FOOD:
-					board.setSpriteAt(Sprite.EMPTY, oldX, oldY);
+			case FOOD:
+					board.ssa(new Sprite(), oldX, oldY);
 				eat();
 				break;
-			case Sprite.WALL:
+			case WALL:
 				//undo movement because it is impossible
-				playerY++;
+				playerY -= dir.getDy();
+				playerX -= dir.getDx();
 				break;
-			case Sprite.GHOST:
+			case GHOST:
+				board.ssa(new Sprite(), oldX, oldY);
 				state.setState(State.LOST);
+				//playerX -=dir.getDx();
+				//playerY -= dir.getDy();
 				break;
+			case OTHER:
+				board.ssa(new Sprite(), oldX, oldY);
 			default:
 				break;
-			}
-			board.setSpriteAt(Sprite.PACMAN, playerX, playerY);
-		} catch (RuntimeException e) {
+			}			
+			board.ssa(player, playerX, playerY);			
+			
+		}catch(RuntimeException e){
 			Log.i("PlayerMovement",
 					"getSpriteAt tried to access a sprite at (x,y) out of bounds");
 		}
-		draw.invalidate();
-
-	}
-
-	public void down() {
-		try {
-			oldX = playerX;
-			oldY = playerY;
-			playerY++;
-			switch (board.getSpriteAt(playerX, playerY)) {
-			case Sprite.EMPTY:
-				board.setSpriteAt(Sprite.EMPTY, oldX, oldY);
-				break;
-			case Sprite.FOOD:
-					board.setSpriteAt(Sprite.EMPTY, oldX, oldY);
-				eat();
-				break;
-			case Sprite.WALL:
-				//undo movement because it is impossible
-				playerY--;
-				break;
-			case Sprite.GHOST:
-				state.setState(State.LOST);
-				break;
-			default:
-				break;
-			}
-			board.setSpriteAt(Sprite.PACMAN, playerX, playerY);
-		} catch (RuntimeException e) {
-			Log.i("PlayerMovement",
-					"getSpriteAt tried to access a sprite at (x,y) out of bounds");
-		}
-		draw.invalidate();
-	}
-
-	public void left() {
-		try {
-			oldY = playerY;
-			oldX = playerX;
-			playerX--;
-			switch (board.getSpriteAt(playerX, playerY)) {
-			case Sprite.EMPTY:
-					board.setSpriteAt(Sprite.EMPTY, oldX, oldY);	
-				break;
-			case Sprite.FOOD:
-					board.setSpriteAt(Sprite.EMPTY, oldX, oldY);	
-				eat();
-				break;
-			case Sprite.WALL:
-				//undo movement because it is impossible
-				playerX++;
-				break;
-			case Sprite.GHOST:
-				state.setState(State.LOST);
-				break;
-			default:
-				break;
-			}
-			board.setSpriteAt(Sprite.PACMAN, playerX, playerY);
-		} catch (RuntimeException e) {
-			Log.i("PlayerMovement",
-					"getSpriteAt tried to access a sprite at (x,y) out of bounds");
-		}
-		draw.invalidate();
-	}
-
-	public void right() {
-		try {
-			oldY = playerY;
-			oldX = playerX;
-			playerX++;
-			switch (board.getSpriteAt(playerX, playerY)) {
-			case Sprite.EMPTY:
-					board.setSpriteAt(Sprite.EMPTY, oldX, oldY);	
-				break;
-			case Sprite.FOOD:
-					board.setSpriteAt(Sprite.EMPTY, oldX, oldY);	
-				eat();
-				break;
-			case Sprite.WALL:
-				//undo movement because it is impossible
-				playerX--;
-				break;
-			case Sprite.GHOST:
-				state.setState(State.LOST);
-				break;
-			default:
-				break;
-			}
-			board.setSpriteAt(Sprite.PACMAN, playerX, playerY);
-		} catch (RuntimeException e) {
-			Log.i("PlayerMovement",
-					"getSpriteAt tried to access a sprite at (x,y) out of bounds");
-		}
-		draw.invalidate();
-	}
-
+	}	
+	
 	/*
 	 * Eats the food and increases score
 	 */
