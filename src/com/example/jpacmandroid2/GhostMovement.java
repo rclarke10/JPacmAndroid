@@ -32,7 +32,7 @@ public class GhostMovement {
 	/*
 	 * Timer delays in millisecond
 	 */
-	private static final int GHOST_MOVE_DELAY = 500;
+	public static final int GHOST_MOVE_DELAY = 200;
 
 	/*
 	 * Direction definitions
@@ -51,6 +51,13 @@ public class GhostMovement {
 	 * State holder
 	 */
 	private State state;
+
+	/*
+	 * Holds the value of the sprite that is in the ghosts path and the sprite
+	 * it is currently on top of
+	 */
+	private int[] nextSprite = new int[50];
+	private int[] currSprite = new int[50];
 
 	/*
 	 * Constructor
@@ -83,72 +90,77 @@ public class GhostMovement {
 		public GhostTimerTask() {
 			for (int i = 0; i < numGhosts; i++) {
 				nextSprite[i] = Sprite.EMPTY;
-				oldSprite[i] = Sprite.EMPTY;
+				currSprite[i] = Sprite.EMPTY;
 			}
 		}
 
 		public void run() {
-			for (int i = 0; i < numGhosts; i++) {
-				dir = random.nextInt(4) + 1;
-				Log.i("gmm", "direction: " + dir);
-				moveGhost(i, dir);
+			if (state.getState() == State.START) {
+				for (int i = 0; i < numGhosts; i++) {
+					dir = random.nextInt(4) + 1;
+					Log.i("gmm", "direction: " + dir);
+					moveGhost(i, dir);
 
+				}
 			}
 
 		}
 
-		/*
-		 * Holds the value of the sprite that is in the ghosts path
-		 */
-		private int[] nextSprite = new int[numGhosts];
-		private int[] oldSprite = new int[numGhosts];
+		private boolean validMove(int ghost, int x, int y) {
+			if (board.getSpriteAt(x, y) == Sprite.WALL
+					| board.getSpriteAt(x, y) == Sprite.GHOST) {
+				return false;
+			} else {
+				return true;
+			}
+		}
 
 		private void moveGhost(int i, int dir) {
-			// Log.i("mgg", "1");
-			oldSprite[i] = nextSprite[i];
-			int oldX = ghostX[i];
-			int oldY = ghostY[i];
-			// Log.i("mgg", "2");
-			if (dir == UP) {
-				if (board.getSpriteAt(ghostY[i] - 1, ghostX[i]) != Sprite.WALL
-						&& board.getSpriteAt(ghostY[i] - 1, ghostX[i]) != Sprite.GHOST) {
-					nextSprite[i] = board.getSpriteAt(ghostY[i] - 1, ghostX[i]);
+			currSprite[i] = nextSprite[i];
+			switch (dir) {
+			case UP:
+				if (validMove(i, ghostX[i], ghostY[i] - 1)) {
+					board.setSpriteAt(currSprite[i], ghostX[i], ghostY[i]);
 					ghostY[i]--;
-					board.setSpriteAt(oldSprite[i], oldX, oldY);
+					nextSprite[i] = board.getSpriteAt(ghostX[i], ghostY[i]);
+					board.setSpriteAt(Sprite.GHOST, ghostX[i], ghostY[i]);
 				}
-			} else if (dir == DOWN) {
-				if (board.getSpriteAt(ghostY[i] + 1, ghostX[i]) != Sprite.WALL
-						&& board.getSpriteAt(ghostY[i] + 1, ghostX[i]) != Sprite.GHOST) {
-					nextSprite[i] = board.getSpriteAt(ghostY[i] + 1, ghostX[i]);
+				break;
+			case DOWN:
+				if (validMove(i, ghostX[i], ghostY[i] + 1)) {
+					board.setSpriteAt(currSprite[i], ghostX[i], ghostY[i]);
 					ghostY[i]++;
-					board.setSpriteAt(oldSprite[i], oldX, oldY);
+					nextSprite[i] = board.getSpriteAt(ghostX[i], ghostY[i]);
+					board.setSpriteAt(Sprite.GHOST, ghostX[i], ghostY[i]);
 				}
-			} else if (dir == LEFT) {
-				if (board.getSpriteAt(ghostY[i], ghostX[i] - 1) != Sprite.WALL
-						&& board.getSpriteAt(ghostY[i], ghostX[i] - 1) != Sprite.GHOST) {
-					nextSprite[i] = board.getSpriteAt(ghostY[i], ghostX[i] - 1);
-					ghostX[i]--;
-					board.setSpriteAt(oldSprite[i], oldX, oldY);
-				}
-			} else if (dir == RIGHT) {
-				if (board.getSpriteAt(ghostY[i], ghostX[i] + 1) != Sprite.WALL
-						&& board.getSpriteAt(ghostY[i], ghostX[i] + 1) != Sprite.GHOST) {
-					nextSprite[i] = board.getSpriteAt(ghostY[i], ghostX[i] + 1);
-					ghostX[i]++;
-					board.setSpriteAt(oldSprite[i], oldX, oldY);
-				}
-			}
-			// Log.i("mgg", "3");
+				break;
 
-			// If after move the ghost is in the same position as PACMAN, then
-			// LOST state
+			case LEFT:
+				if (validMove(i, ghostX[i] - 1, ghostY[i])) {
+					board.setSpriteAt(currSprite[i], ghostX[i], ghostY[i]);
+					ghostX[i]--;
+					nextSprite[i] = board.getSpriteAt(ghostX[i], ghostY[i]);
+					board.setSpriteAt(Sprite.GHOST, ghostX[i], ghostY[i]);
+				}
+				break;
+
+			case RIGHT:
+				if (validMove(i, ghostX[i] + 1, ghostY[i])) {
+					board.setSpriteAt(currSprite[i], ghostX[i], ghostY[i]);
+					ghostX[i]++;
+					nextSprite[i] = board.getSpriteAt(ghostX[i], ghostY[i]);
+					board.setSpriteAt(Sprite.GHOST, ghostX[i], ghostY[i]);
+				}
+				break;
+			default:
+				// don't move: Pacman is not allowed to move in the Z plane
+			}
+
+			// Checks if the ghost moves onto Pacman, triggering a loss
 			if (board.getSpriteAt(ghostY[i], ghostX[i]) == Sprite.PACMAN) {
 				state.setState(State.LOST);
 			}
-			board.setSpriteAt(Sprite.GHOST, ghostX[i], ghostY[i]);
-			// Log.i("mgg", "4");
-			// game.redraw();
-			Log.i("mgg", "5");
+
 		}
 	}
 }
