@@ -26,8 +26,8 @@ public class Board {
 	/*
 	 * Board Array
 	 */
-	private static int board[][] = new int[width][height];
-	private Tile tboard[][] = new Tile[width][height];
+
+	private Tile board[][] = new Tile[width][height];
 	
 	
 	/*
@@ -68,13 +68,10 @@ public class Board {
 	/*
 	 * Get current board layout
 	 */
-	public int[][] getBoard(){
+	public Tile[][] getBoard(){
 		return board;
-	}
+	}	
 	
-	public Tile[][] getTBoard(){
-		return tboard;
-	}
 
 	/*
 	 * Gets player position
@@ -112,32 +109,27 @@ public class Board {
 					
 					// Translate each token into the corresponding board element
 					if (token == Sprite.WALL_SYM) {
-						board[x][y] = Sprite.WALL;
-						tboard[x][y] = new Tile(x,y, new Wall());
+						board[x][y] = new Tile(x,y, new Wall());
 					} else if (token == Sprite.FOOD_SYM) {
-						board[x][y] = Sprite.FOOD;
-						tboard[x][y] = new Tile(x,y, new Food());
+						board[x][y] = new Tile(x,y, new Food());
 						totalScore += 10;
-					} else if (token == Sprite.PACMAN_SYM) {						
-						board[x][y] = Sprite.PACMAN;
-						tboard[x][y] = new Tile(x,y, new Player());
+					} else if (token == Sprite.PACMAN_SYM) {
+						board[x][y] = new Tile(x,y, new Player());
 						//initialize player starting position
 						playerStartX = x;
 						playerStartY = y;
 					} else if (token == Sprite.GHOST_SYM) {
-						board[x][y] = Sprite.GHOST;
-						tboard[x][y] = new Tile(x,y, new Ghost());
+						board[x][y] = new Tile(x,y, new Ghost());
 						ghostX[numGhosts] = x;
 						ghostY[numGhosts] = y;
 						numGhosts++;
 					} else if (token == Sprite.EMPTY_SYM) {
-						board[x][y] = Sprite.EMPTY;
-						tboard[x][y] = new Tile(x,y, new Sprite());
+						board[x][y] = new Tile(x,y, new Sprite());
 					}
 				}
 			}
 			
-			tboard[11][15] = new Tile(11,15, new Player());
+			board[11][15] = new Tile(11,15, new Player());
 			
 			// close file
 			br.close();
@@ -167,17 +159,22 @@ public class Board {
 	}
 	*/
 
-	public Sprite getSpriteAt(int x, int y){
-		if(tboard[x][y] != null){
-			return tboard[x][y].getSprite();	
+	public Sprite getSpriteAt(int x, int y)throws IndexOutOfBoundsException{
+		if(x < 0 || x >= getWidth() || y < 0|| y >= getHeight()){
+			throw new IndexOutOfBoundsException();
+		}
+		if(board[x][y] != null){
+			return board[x][y].getSprite();	
 		}
 		return new Sprite();
 	}
 	
-	public SpriteType getSpriteTypeAt(int x, int y){
-		//return SpriteType.FOOD;
-		if(tboard[x][y] != null){
-			return tboard[x][y].getSprite().getSpriteType();	
+	public SpriteType getSpriteTypeAt(int x, int y)throws IndexOutOfBoundsException{
+		if(x < 0 || x >= getWidth() || y < 0|| y >= getHeight()){
+			throw new IndexOutOfBoundsException();
+		}
+		if(board[x][y] != null){
+			return board[x][y].getSprite().getSpriteType();	
 		}
 		return SpriteType.EMPTY;		
 	}
@@ -192,7 +189,7 @@ public class Board {
 	*/
 	
 	public void setSpriteAt(Sprite sprite, int x, int y){
-		tboard[x][y].sprite = sprite;
+		board[x][y].sprite = sprite;
 	}
 	
 	/*

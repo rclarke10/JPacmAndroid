@@ -243,13 +243,13 @@ public class Draw extends View {
 		return board.getWidth();
 	}
 	
-	private int spriteArray[][] = new int[23][21];
+	private Tile spriteArray[][] = new Tile[23][21];
 	
-	public void setSpriteArray(int [][] array){
+	public void setSpriteArray(Tile[][] tiles){
 		
 		for(int x = 0; x < 23; x++){
 			for(int y = 0; y < 21; y++){
-				this.spriteArray[x][y] = array[x][y];	
+				this.spriteArray[x][y] = tiles[x][y];	
 			}
 		}
 	}

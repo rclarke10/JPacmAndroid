@@ -186,5 +186,9 @@ public class Game extends Activity {
 			});
 		}
 	}
+	
+	public State getState(){
+		return state;
+	}
 
 }

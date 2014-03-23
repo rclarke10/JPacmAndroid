@@ -45,11 +45,6 @@ public class GhostMovement {
 	private static final int RIGHT = 4;
 
 	/*
-	 * Random number holder
-	 */
-	//private int dir;
-
-	/*
 	 * State holder
 	 */
 	//private State state;
@@ -66,25 +61,18 @@ public class GhostMovement {
 	 */
 	public GhostMovement(Board board, Draw draw, State state) {
 		this.board = board;
-		// Log.i("gmm", "beginning of gm constructor");
 		this.numGhosts = board.getNumGhosts();
-		//Timer timer = new Timer();
-		//GhostTimerTask gt = new GhostTimerTask();
-		//this.state = state;
+		
 		for (int i = 0; i < numGhosts; i++) {
 			nextSprite[i] = new Sprite();
 			currSprite[i] = new Sprite();
 		}
-		// Log.i("gmm", "before ghost x,y sent");
+
 		for (int i = 0; i < numGhosts; i++) {
 			ghostX[i] = board.getGhostX(i);
-			// Log.i("gxy","ghost x:"+ghostX[i]);
 			ghostY[i] = board.getGhostY(i);
-			// Log.i("gxy","ghost y:"+ghostY[i]);
 		}
-		// Log.i("gmm", "after ghost x,y sent");
-		// timer.schedule(gt, GHOST_MOVE_DELAY, GHOST_MOVE_DELAY);
-		// Log.i("gmm", "timer created");
+		
 	}
 
 	private boolean validMove(int ghost, int x, int y) {
@@ -98,12 +86,18 @@ public class GhostMovement {
 
 	public void moveGhost(int i, int dir) {
 		currSprite[i] = nextSprite[i];
+		
+		
+		
 		switch (dir) {
 		case UP:
 			if (validMove(i, ghostX[i], ghostY[i] - 1)) {
 				board.setSpriteAt(currSprite[i], ghostX[i], ghostY[i]);
 				ghostY[i]--;
 				nextSprite[i] = board.getSpriteAt(ghostX[i], ghostY[i]);
+				 if (board.getSpriteTypeAt(ghostX[i], ghostY[i]) == SpriteType.PLAYER) {
+					 board.game.getState().setState(State.LOST); 
+				 }
 				board.setSpriteAt(new Ghost(), ghostX[i], ghostY[i]);
 			}
 			break;
@@ -112,6 +106,9 @@ public class GhostMovement {
 				board.setSpriteAt(currSprite[i], ghostX[i], ghostY[i]);
 				ghostY[i]++;
 				nextSprite[i] = board.getSpriteAt(ghostX[i], ghostY[i]);
+				 if (board.getSpriteTypeAt(ghostX[i], ghostY[i]) == SpriteType.PLAYER) {
+					 board.game.getState().setState(State.LOST); 
+				 }
 				board.setSpriteAt(new Ghost(), ghostX[i], ghostY[i]);
 			}
 			break;
@@ -121,15 +118,22 @@ public class GhostMovement {
 				board.setSpriteAt(currSprite[i], ghostX[i], ghostY[i]);
 				ghostX[i]--;
 				nextSprite[i] = board.getSpriteAt(ghostX[i], ghostY[i]);
+				 if (board.getSpriteTypeAt(ghostX[i], ghostY[i]) == SpriteType.PLAYER) {
+					 board.game.getState().setState(State.LOST); 
+				 }
 				board.setSpriteAt(new Ghost(), ghostX[i], ghostY[i]);
 			}
 			break;
 
 		case RIGHT:
 			if (validMove(i, ghostX[i] + 1, ghostY[i])) {
+				
 				board.setSpriteAt(currSprite[i], ghostX[i], ghostY[i]);
 				ghostX[i]++;
 				nextSprite[i] = board.getSpriteAt(ghostX[i], ghostY[i]);
+				 if (board.getSpriteTypeAt(ghostX[i], ghostY[i]) == SpriteType.PLAYER) {
+					 board.game.getState().setState(State.LOST); 
+				 }
 				board.setSpriteAt(new Ghost(), ghostX[i], ghostY[i]);
 			}
 			break;
@@ -138,10 +142,9 @@ public class GhostMovement {
 		}
 
 		// Checks if the ghost moves onto Pacman, triggering a loss
-		/*
-		 * if (board.getSpriteAt(ghostY[i], ghostX[i]) == Sprite.PACMAN) {
-		 * state.setState(State.LOST); }
-		 */
+		
+		
+		 
 
 	}
 }
