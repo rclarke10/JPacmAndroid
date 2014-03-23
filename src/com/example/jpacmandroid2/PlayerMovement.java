@@ -45,11 +45,15 @@ public class PlayerMovement {
 	private int oldY;
 	
 	public void move(Direction dir){
+		
 		try{
 			Player player = (Player) board.gsa(playerX, playerY);
+			Log.i("Move", "a");
 			player.setDirection(dir);
+			Log.i("Move", "b");
 			oldX = playerX;
 			oldY = playerY;
+
 			playerX += dir.getDx();
 			playerY += dir.getDy();
 			
@@ -60,38 +64,43 @@ public class PlayerMovement {
 				playerX = 0;
 			}
 			
-			switch(board.gsta(playerX, playerY)){
+			switch (board.gsta(playerX, playerY)) {
 			case EMPTY:
 				board.ssa(new Sprite(), oldX, oldY);
 				break;
 			case FOOD:
-					board.ssa(new Sprite(), oldX, oldY);
+				Log.i("Move", "c");
+				board.ssa(new Sprite(), oldX, oldY);
 				eat();
 				break;
 			case WALL:
 				//undo movement because it is impossible
-				playerY -= dir.getDy();
-				playerX -= dir.getDx();
+				playerY = oldY;
+				playerX = oldX;
 				break;
 			case GHOST:
 				board.ssa(new Sprite(), oldX, oldY);
 				state.setState(State.LOST);
-				//playerX -=dir.getDx();
-				//playerY -= dir.getDy();
 				break;
 			case OTHER:
 				board.ssa(new Sprite(), oldX, oldY);
 			default:
 				break;
-			}			
-			board.ssa(player, playerX, playerY);			
+			}
+			board.ssa(player, playerX, playerY);
 			
-		}catch(RuntimeException e){
-			Log.i("PlayerMovement",
-					"getSpriteAt tried to access a sprite at (x,y) out of bounds");
-		}
-	}	
-	
+			Log.i("move", Integer.toString((playerX)));
+			
+			}catch (RuntimeException e) {
+			//Log.i("PlayerMovement",
+				//	"getSpriteAt tried to access a sprite at (x,y) out of bounds");
+		}		
+		
+		draw.invalidate();
+		
+
+	}
+
 	/*
 	 * Eats the food and increases score
 	 */

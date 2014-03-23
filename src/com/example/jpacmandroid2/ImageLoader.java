@@ -154,7 +154,7 @@ public class ImageLoader {
         int dirIndex = dir.ordinal();
         bm = playerImage[dirIndex][anim % 4];
         assert bm != null;
-        Log.i("Image Loader", "returning player bm " + anim + " " + playerAnimationCount() + " "+ dir.ordinal());
+        //Log.i("Image Loader", "returning player bm " + anim + " " + playerAnimationCount() + " "+ dir.ordinal());
         return bm;
     }
 
@@ -175,15 +175,12 @@ public class ImageLoader {
      */
     
     Bitmap resize(Bitmap bm) {
-    	Log.i("Image Loader", "resizing bm");
         if(bm != null){
         	  bm.getWidth();
               bm.getHeight();
               Bitmap result = bm;
               if (width > 0 && height > 0) {
-              	Log.i("Image Loader", "creating scaled bm");
               	result = Bitmap.createScaledBitmap(bm, width, height, false);
-              	Log.i("Image Loader", "created scaled bm");
               }
               
               return result;

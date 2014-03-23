@@ -39,8 +39,8 @@ public class Board {
 	/*
 	 * Ghost position holder
 	 */
-	private int[] ghostX = new int[15];
-	private int[] ghostY = new int[15];
+	public int[] ghostX = new int[50];
+	public int[] ghostY = new int[50];
 	
 	/*
 	 * Ghost counter
@@ -118,8 +118,7 @@ public class Board {
 						board[x][y] = Sprite.FOOD;
 						tboard[x][y] = new Tile(x,y, new Food());
 						totalScore += 10;
-					} else if (token == Sprite.PACMAN_SYM) {
-						Log.i("parser", "tttt");
+					} else if (token == Sprite.PACMAN_SYM) {						
 						board[x][y] = Sprite.PACMAN;
 						tboard[x][y] = new Tile(x,y, new Player());
 						//initialize player starting position
@@ -168,7 +167,6 @@ public class Board {
 
 	public Sprite gsa(int x, int y){
 		if(tboard[x][y] != null){
-			Log.i("player 2", tboard[x][y].getSprite().toString());
 			return tboard[x][y].getSprite();	
 		}
 		return new Sprite();
@@ -177,7 +175,6 @@ public class Board {
 	public SpriteType gsta(int x, int y){
 		//return SpriteType.FOOD;
 		if(tboard[x][y] != null){
-			Log.i("Board", "not null");
 			return tboard[x][y].getSprite().getSpriteType();	
 		}
 		return SpriteType.EMPTY;		

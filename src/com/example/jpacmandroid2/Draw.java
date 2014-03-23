@@ -9,7 +9,6 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 
 public class Draw extends View {
@@ -79,9 +78,6 @@ public class Draw extends View {
 			 cellWidth = viewWidth/W;
 			 cellHeight = viewHeight/H;
 			 
-			 Log.i("View", "Height: " + viewHeight);
-			 Log.i("View", "Width: " + viewWidth);	
-			 
 			 imageLoader.setWidth(cellWidth);
 			 imageLoader.setHeight(cellHeight);
 			 
@@ -115,9 +111,7 @@ public class Draw extends View {
         paint.setStyle(Paint.Style.STROKE);
         paint.setColor(Color.BLUE);
         canvas.drawRect(fullCell, paint);
-        Log.i("on Draw", "gsta before");
-        board.gsta(x, y);
-        Log.i("on Draw", "gsta after");
+
         if (board.gsta(x,y) == SpriteType.FOOD) {
         	paint.setStyle(Paint.Style.FILL);
         	Rect centeredCell = centeredArea(startx, starty, 2);
@@ -132,19 +126,12 @@ public class Draw extends View {
         	canvas.drawRect(fullCell, paint);
         }
         
-        if(x == 11 && y == 15){
-        	Log.i("player", "PLARRR");
-        }
+
         
       	Bitmap bm = spriteBitmap(board.gsa(x,y));
         if (bm != null) {
-        	Log.i("player", board.gsa(x, y).toString());
         	canvas.drawBitmap(bm, startx, starty, paint);       	
-        }else{
-        	Log.i("game view", "bitmap is null");
-        	
-        }        
-        
+        }
  	}
    
 	
@@ -194,13 +181,13 @@ public class Draw extends View {
 	 * @return A Bitmap for this sprite.
 	 */
     private Bitmap spriteBitmap(Sprite sprite) {
-    	Log.i("sprite", sprite.getSpriteType().toString());
         Bitmap bm = null;
+
         if (imageLoader != null && sprite.getSpriteType() != SpriteType.EMPTY) {
             if (sprite.getSpriteType() == SpriteType.PLAYER) {
-            	Log.i("player", "player");
             	bm = imageLoader.player(((Player) sprite).getDirection(), animationCount);
                 nextAnimation();
+
             }
             if (sprite.getSpriteType() == SpriteType.GHOST) { 
                  bm = imageLoader.monster(animationCount);
@@ -210,11 +197,8 @@ public class Draw extends View {
     }
     
     public void nextAnimation() {
-    	Log.i("animation", "nextAnimation");
         if (imageLoader != null) {
-            animationCount = (animationCount + 1)
-            % (imageLoader.monsterAnimationCount()
-                    * imageLoader.playerAnimationCount());
+            animationCount = (animationCount + 1) % (imageLoader.monsterAnimationCount() * imageLoader.playerAnimationCount());
             invalidate(); //this might break everything. try removing 
         }
     }
