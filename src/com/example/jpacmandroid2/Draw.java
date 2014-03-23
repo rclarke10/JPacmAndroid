@@ -126,12 +126,19 @@ public class Draw extends View {
         	canvas.drawRect(fullCell, paint);
         }
         
+        if(board.getSpriteAt(x, y) == Sprite.GHOST){
+        	Bitmap bm = spriteBitmap(Sprite.GHOST);
+        	canvas.drawBitmap(bm, startx, starty, paint);   
+        }else{
 
-        
-      	Bitmap bm = spriteBitmap(board.gsa(x,y));
-        if (bm != null) {
-        	canvas.drawBitmap(bm, startx, starty, paint);       	
+          	Bitmap bm = spriteBitmap(board.gsa(x,y));
+            if (bm != null) {
+            	canvas.drawBitmap(bm, startx, starty, paint);       	
+            }
         }
+        
+
+       
  	}
    
 	
@@ -190,9 +197,16 @@ public class Draw extends View {
 
             }
             if (sprite.getSpriteType() == SpriteType.GHOST) { 
-                 bm = imageLoader.monster(animationCount);
+              //   bm = imageLoader.monster(animationCount);
             }
         }
+        return bm;
+    }
+    
+    private Bitmap spriteBitmap(int i) {
+        Bitmap bm = null;
+
+        bm = imageLoader.monster(animationCount);
         return bm;
     }
     
