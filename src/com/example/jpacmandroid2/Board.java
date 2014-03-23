@@ -161,18 +161,20 @@ public class Board {
 	/*
 	 * Returns the value of the sprite at x,y
 	 */
+	/*
 	public int getSpriteAt(int x, int y) throws RuntimeException {
 		return board[x][y];
 	}
+	*/
 
-	public Sprite gsa(int x, int y){
+	public Sprite getSpriteAt(int x, int y){
 		if(tboard[x][y] != null){
 			return tboard[x][y].getSprite();	
 		}
 		return new Sprite();
 	}
 	
-	public SpriteType gsta(int x, int y){
+	public SpriteType getSpriteTypeAt(int x, int y){
 		//return SpriteType.FOOD;
 		if(tboard[x][y] != null){
 			return tboard[x][y].getSprite().getSpriteType();	
@@ -183,11 +185,13 @@ public class Board {
 	/*
 	 * Sets the sprite to the input
 	 */
+	/*
 	public void setSpriteAt(int sprite, int x, int y) {
 		board[x][y] = sprite;
 	}
+	*/
 	
-	public void ssa(Sprite sprite, int x, int y){
+	public void setSpriteAt(Sprite sprite, int x, int y){
 		tboard[x][y].sprite = sprite;
 	}
 	

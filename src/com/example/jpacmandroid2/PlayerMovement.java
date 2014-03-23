@@ -47,7 +47,7 @@ public class PlayerMovement {
 	public void move(Direction dir){
 		
 		try{
-			Player player = (Player) board.gsa(playerX, playerY);
+			Player player = (Player) board.getSpriteAt(playerX, playerY);
 			Log.i("Move", "a");
 			player.setDirection(dir);
 			Log.i("Move", "b");
@@ -64,13 +64,13 @@ public class PlayerMovement {
 				playerX = 0;
 			}
 			
-			switch (board.gsta(playerX, playerY)) {
+			switch (board.getSpriteTypeAt(playerX, playerY)) {
 			case EMPTY:
-				board.ssa(new Sprite(), oldX, oldY);
+				board.setSpriteAt(new Sprite(), oldX, oldY);
 				break;
 			case FOOD:
 				Log.i("Move", "c");
-				board.ssa(new Sprite(), oldX, oldY);
+				board.setSpriteAt(new Sprite(), oldX, oldY);
 				eat();
 				break;
 			case WALL:
@@ -79,15 +79,15 @@ public class PlayerMovement {
 				playerX = oldX;
 				break;
 			case GHOST:
-				board.ssa(new Sprite(), oldX, oldY);
+				board.setSpriteAt(new Sprite(), oldX, oldY);
 				state.setState(State.LOST);
 				break;
 			case OTHER:
-				board.ssa(new Sprite(), oldX, oldY);
+				board.setSpriteAt(new Sprite(), oldX, oldY);
 			default:
 				break;
 			}
-			board.ssa(player, playerX, playerY);
+			board.setSpriteAt(player, playerX, playerY);
 			
 			Log.i("move", Integer.toString((playerX)));
 			

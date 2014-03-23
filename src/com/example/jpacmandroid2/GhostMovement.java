@@ -4,6 +4,8 @@ import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import com.example.jpacmandroid2.Board.SpriteType;
+
 import android.util.Log;
 
 public class GhostMovement {
@@ -56,8 +58,8 @@ public class GhostMovement {
 	 * Holds the value of the sprite that is in the ghosts path and the sprite
 	 * it is currently on top of
 	 */
-	private int[] nextSprite = new int[50];
-	private int[] currSprite = new int[50];
+	private Sprite[] nextSprite = new Sprite[50];
+	private Sprite[] currSprite = new Sprite[50];
 
 	/*
 	 * Constructor
@@ -70,8 +72,8 @@ public class GhostMovement {
 		//GhostTimerTask gt = new GhostTimerTask();
 		//this.state = state;
 		for (int i = 0; i < numGhosts; i++) {
-			nextSprite[i] = Sprite.EMPTY;
-			currSprite[i] = Sprite.EMPTY;
+			nextSprite[i] = new Sprite();
+			currSprite[i] = new Sprite();
 		}
 		// Log.i("gmm", "before ghost x,y sent");
 		for (int i = 0; i < numGhosts; i++) {
@@ -86,8 +88,8 @@ public class GhostMovement {
 	}
 
 	private boolean validMove(int ghost, int x, int y) {
-		if (board.getSpriteAt(x, y) == Sprite.WALL
-				|| board.getSpriteAt(x, y) == Sprite.GHOST) {
+		if (board.getSpriteTypeAt(x, y) == SpriteType.WALL
+				|| board.getSpriteTypeAt(x, y) == SpriteType.GHOST) {
 			return false;
 		} else {
 			return true;
@@ -102,7 +104,7 @@ public class GhostMovement {
 				board.setSpriteAt(currSprite[i], ghostX[i], ghostY[i]);
 				ghostY[i]--;
 				nextSprite[i] = board.getSpriteAt(ghostX[i], ghostY[i]);
-				board.setSpriteAt(Sprite.GHOST, ghostX[i], ghostY[i]);
+				board.setSpriteAt(new Ghost(), ghostX[i], ghostY[i]);
 			}
 			break;
 		case DOWN:
@@ -110,7 +112,7 @@ public class GhostMovement {
 				board.setSpriteAt(currSprite[i], ghostX[i], ghostY[i]);
 				ghostY[i]++;
 				nextSprite[i] = board.getSpriteAt(ghostX[i], ghostY[i]);
-				board.setSpriteAt(Sprite.GHOST, ghostX[i], ghostY[i]);
+				board.setSpriteAt(new Ghost(), ghostX[i], ghostY[i]);
 			}
 			break;
 
@@ -119,7 +121,7 @@ public class GhostMovement {
 				board.setSpriteAt(currSprite[i], ghostX[i], ghostY[i]);
 				ghostX[i]--;
 				nextSprite[i] = board.getSpriteAt(ghostX[i], ghostY[i]);
-				board.setSpriteAt(Sprite.GHOST, ghostX[i], ghostY[i]);
+				board.setSpriteAt(new Ghost(), ghostX[i], ghostY[i]);
 			}
 			break;
 
@@ -128,7 +130,7 @@ public class GhostMovement {
 				board.setSpriteAt(currSprite[i], ghostX[i], ghostY[i]);
 				ghostX[i]++;
 				nextSprite[i] = board.getSpriteAt(ghostX[i], ghostY[i]);
-				board.setSpriteAt(Sprite.GHOST, ghostX[i], ghostY[i]);
+				board.setSpriteAt(new Ghost(), ghostX[i], ghostY[i]);
 			}
 			break;
 		default:

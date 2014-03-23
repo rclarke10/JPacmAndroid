@@ -112,7 +112,7 @@ public class Draw extends View {
         paint.setColor(Color.BLUE);
         canvas.drawRect(fullCell, paint);
 
-        if (board.gsta(x,y) == SpriteType.FOOD) {
+        if (board.getSpriteTypeAt(x,y) == SpriteType.FOOD) {
         	paint.setStyle(Paint.Style.FILL);
         	Rect centeredCell = centeredArea(startx, starty, 2);
         	paint.setColor(Color.BLACK);
@@ -126,19 +126,12 @@ public class Draw extends View {
         	canvas.drawRect(fullCell, paint);
         }
         
-        if(board.getSpriteAt(x, y) == Sprite.GHOST){
-        	Bitmap bm = spriteBitmap(Sprite.GHOST);
-        	canvas.drawBitmap(bm, startx, starty, paint);   
-        }else{
 
-          	Bitmap bm = spriteBitmap(board.gsa(x,y));
-            if (bm != null) {
-            	canvas.drawBitmap(bm, startx, starty, paint);       	
-            }
+        Bitmap bm = spriteBitmap(board.getSpriteAt(x,y));
+        if (bm != null) {
+           	canvas.drawBitmap(bm, startx, starty, paint);       	
         }
-        
-
-       
+              
  	}
    
 	
@@ -159,7 +152,7 @@ public class Draw extends View {
 	
 	
 	private int spriteColor(int x, int y) {
-		SpriteType st = board.gsta(x, y);
+		SpriteType st = board.getSpriteTypeAt(x, y);
 
 		int c = Color.GRAY;
 		switch(st){
@@ -197,7 +190,7 @@ public class Draw extends View {
 
             }
             if (sprite.getSpriteType() == SpriteType.GHOST) { 
-              //   bm = imageLoader.monster(animationCount);
+                 bm = imageLoader.monster(animationCount);
             }
         }
         return bm;
