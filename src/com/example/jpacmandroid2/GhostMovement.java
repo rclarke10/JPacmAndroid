@@ -87,7 +87,7 @@ public class GhostMovement {
 
 	private boolean validMove(int ghost, int x, int y) {
 		if (board.getSpriteAt(x, y) == Sprite.WALL
-				| board.getSpriteAt(x, y) == Sprite.GHOST) {
+				|| board.getSpriteAt(x, y) == Sprite.GHOST) {
 			return false;
 		} else {
 			return true;
