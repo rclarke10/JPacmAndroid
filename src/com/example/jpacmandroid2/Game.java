@@ -63,7 +63,6 @@ public class Game extends Activity {
 		state = new State();
 		board = new Board(this);
 		score = new Score(board.getTotalScore(), state, this);
-		draw.setSpriteArray(board.getBoard());
 		draw.setBoard(board);
 		gm = new GhostMovement(board, draw, state);
 		pm = new PlayerMovement(board, state, score, draw);
@@ -85,12 +84,10 @@ public class Game extends Activity {
 			draw = (Draw) findViewById(R.id.drawGame);
 			state = new State();
 			board = new Board(this);
-			score = new Score(board.getTotalScore(), state, this);
-			draw.setSpriteArray(board.getBoard());
+			score = new Score(board.getTotalScore(), state, this);	
 			draw.setBoard(board);
 			gm = new GhostMovement(board, draw, state);
 			pm = new PlayerMovement(board, state, score, draw);
-			//pm.down();
 			Timer updateTimer = new Timer();
 			GhostTimerTask mtt = new GhostTimerTask();
 			updateTimer.schedule(mtt, GhostMovement.GHOST_MOVE_DELAY, GhostMovement.GHOST_MOVE_DELAY);

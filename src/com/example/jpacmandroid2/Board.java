@@ -26,7 +26,6 @@ public class Board {
 	/*
 	 * Board Array
 	 */
-
 	private Tile board[][];
 	
 	
@@ -97,8 +96,7 @@ public class Board {
 		try {
 
 			BufferedReader br = new BufferedReader(new InputStreamReader(game
-					.getAssets().open("board.txt")));
-			
+					.getAssets().open("board.txt")));			
 			
 			String line;
 			char token;
@@ -117,7 +115,6 @@ public class Board {
 						totalScore += 10;
 					} else if (token == Sprite.PACMAN_SYM) {
 						board[x][y] = new Tile(x,y, new Player());
-						
 						//initialize player starting position
 						playerStartX = x;
 						playerStartY = y;
@@ -132,7 +129,7 @@ public class Board {
 				}
 			}
 			
-			board[playerStartX][playerStartY] = new Tile(playerStartX, playerStartY, new Player());
+			board[playerStartX][playerStartY] = new Tile(playerStartX,playerStartY, new Player());
 			
 			// close file
 			br.close();
@@ -146,6 +143,9 @@ public class Board {
 
 	}
 	
+	/**
+	 * Finds the width and height of the source board
+	 */	
 	public void getBoardSize(){
 		try {
 			BufferedReader br = new BufferedReader(new InputStreamReader(game
@@ -171,15 +171,6 @@ public class Board {
 		return totalScore;
 	}
 
-	/*
-	 * Returns the value of the sprite at x,y
-	 */
-	/*
-	public int getSpriteAt(int x, int y) throws RuntimeException {
-		return board[x][y];
-	}
-	*/
-
 	public Sprite getSpriteAt(int x, int y)throws IndexOutOfBoundsException{
 		if(x < 0 || x >= getWidth() || y < 0|| y >= getHeight()){
 			throw new IndexOutOfBoundsException();
@@ -199,15 +190,6 @@ public class Board {
 		}
 		return SpriteType.EMPTY;		
 	}
-	
-	/*
-	 * Sets the sprite to the input
-	 */
-	/*
-	public void setSpriteAt(int sprite, int x, int y) {
-		board[x][y] = sprite;
-	}
-	*/
 	
 	public void setSpriteAt(Sprite sprite, int x, int y){
 		board[x][y].sprite = sprite;
@@ -238,8 +220,7 @@ public class Board {
 	public int getWidth(){
 		return board.length;
 	}
-	
-	
+		
 	
 	/**
 	 * From starting coordinate 0 <= current < max, add delta to the current

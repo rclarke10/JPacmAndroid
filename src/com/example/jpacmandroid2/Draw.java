@@ -28,12 +28,12 @@ public class Draw extends View {
     /**
      * The horizontal gap between cells, in pixels.
      */
-    public static final int CELL_HGAP = 1;
+    public static final int CELL_HGAP = 0;
 
     /**
      * The vertical gap between cells, in pixels.
      */
-    public static final int CELL_VGAP = 1;
+    public static final int CELL_VGAP = 0;
     
     /**
      * The manager keeping track of images.
@@ -199,40 +199,14 @@ public class Draw extends View {
         }
         return bm;
     }
-    
-    private Bitmap spriteBitmap(int i) {
-        Bitmap bm = null;
-
-        bm = imageLoader.monster(animationCount);
-        return bm;
-    }
-    
+        
     public void nextAnimation() {
         if (imageLoader != null) {
             animationCount = (animationCount + 1) % (imageLoader.monsterAnimationCount() * imageLoader.playerAnimationCount());
             invalidate(); //this might break everything. try removing 
         }
     }
-	
-
-    /**
-     * The width of the board viewer in pixels.
-     *
-     * @return The width of the board viewer.
-     */
-    public final int windowWidth() {
-        return (cellWidth + CELL_HGAP) * (worldWidth() + 1);
-    }
-
-    /**
-     * The height of the board viewer in pixels.
-     *
-     * @return The height of the board viewer.
-     */
-    public final int windowHeight() {
-        return (cellHeight + CELL_VGAP) * (worldHeight() + 1);
-    }
-
+	 
     /**
      * @return The board height measured in cells, >= 0.
      */  
@@ -246,17 +220,5 @@ public class Draw extends View {
 	private int worldWidth() {
 		return board.getWidth();
 	}
-	
-	private Tile spriteArray[][] = new Tile[boardWidth][boardHeight];
-	
-	public void setSpriteArray(Tile[][] tiles){
-		
-		for(int x = 0; x < boardWidth; x++){
-			for(int y = 0; y < boardHeight; y++){
-				this.spriteArray[x][y] = tiles[x][y];	
-			}
-		}
-	}
-	
-	
+
 }
