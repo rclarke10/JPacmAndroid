@@ -189,8 +189,9 @@ public class Draw extends View {
         Bitmap bm = null;
         if (imageLoader != null && i != Sprite.EMPTY) {
             if (i == Sprite.PACMAN) {
-            	bm = imageLoader.player(Direction.DOWN, 0);
-
+            	 Log.i("anime", "player"+animationCount);
+            	bm = imageLoader.player(Direction.DOWN, animationCount);
+            	nextAnimation();
                 Log.i("sprite", "player");
             }
             if (i == Sprite.GHOST) { 
@@ -202,9 +203,8 @@ public class Draw extends View {
     
     public void nextAnimation() {
         if (imageLoader != null) {
-            animationCount = (animationCount + 1)
-            % (imageLoader.monsterAnimationCount()
-                    * imageLoader.playerAnimationCount());
+        	Log.i("hey", "player");
+            animationCount = (animationCount + 1) % (imageLoader.monsterAnimationCount() * imageLoader.playerAnimationCount());
             invalidate(); //this might break everything. try removing 
         }
     }

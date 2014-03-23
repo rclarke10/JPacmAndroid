@@ -77,8 +77,10 @@ public class Game extends Activity {
 	 * Starts the game
 	 */
 	public void startClick(View view) {
+		if(state.getState()!= 3){
 		state.setState(State.START);
 		toast("Game started.");
+		}
 	}
 
 	/*
