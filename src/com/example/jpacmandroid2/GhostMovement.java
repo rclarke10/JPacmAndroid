@@ -99,7 +99,9 @@ public class GhostMovement {
 		
 		switch (dir) {
 		case UP:
-			if (validMove(ghostX[i], ghostY[i] - 1)) {
+			if(ghostY[i] - 1 < 0){
+				//do nothing
+			}else if (validMove(ghostX[i], ghostY[i] - 1)) {
 				board.setSpriteAt(currSprite[i], ghostX[i], ghostY[i]);
 				ghostY[i]--;
 				nextSprite[i] = board.getSpriteAt(ghostX[i], ghostY[i]);
@@ -109,8 +111,13 @@ public class GhostMovement {
 				board.setSpriteAt(new Ghost(), ghostX[i], ghostY[i]);
 			}
 			break;
+			
 		case DOWN:
 			if (validMove(ghostX[i], ghostY[i] + 1)) {
+
+			if(ghostY[i] + 1 >= board.getHeight()){
+				//do nothing
+			}else if (validMove(ghostX[i], ghostY[i] + 1)) {
 				board.setSpriteAt(currSprite[i], ghostX[i], ghostY[i]);
 				ghostY[i]++;
 				nextSprite[i] = board.getSpriteAt(ghostX[i], ghostY[i]);
@@ -120,9 +127,15 @@ public class GhostMovement {
 				board.setSpriteAt(new Ghost(), ghostX[i], ghostY[i]);
 			}
 			break;
-
+			}
 		case LEFT:
+
 			if (validMove(ghostX[i] - 1, ghostY[i])) {
+
+			if(ghostX[i] - 1 < 0){
+			//do nothing
+			}else if (validMove(ghostX[i] - 1, ghostY[i])) {
+
 				board.setSpriteAt(currSprite[i], ghostX[i], ghostY[i]);
 				ghostX[i]--;
 				nextSprite[i] = board.getSpriteAt(ghostX[i], ghostY[i]);
@@ -132,9 +145,14 @@ public class GhostMovement {
 				board.setSpriteAt(new Ghost(), ghostX[i], ghostY[i]);
 			}
 			break;
-
+			}
 		case RIGHT:
+
 			if (validMove(ghostX[i] + 1, ghostY[i])) {
+
+			if(ghostX[i] + 1 >= board.getWidth()){
+				//do nothing
+			}else if (validMove(ghostX[i] + 1, ghostY[i])) {
 				
 				board.setSpriteAt(currSprite[i], ghostX[i], ghostY[i]);
 				ghostX[i]++;
@@ -145,14 +163,11 @@ public class GhostMovement {
 				board.setSpriteAt(new Ghost(), ghostX[i], ghostY[i]);
 			}
 			break;
+			}
 		default:
 			// don't move: Pacman is not allowed to move in the Z plane
 		}
 
-		// Checks if the ghost moves onto Pacman, triggering a loss
 		
-		
-		 
-
 	}
 }
