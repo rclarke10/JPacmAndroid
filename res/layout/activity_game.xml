@@ -89,7 +89,7 @@
         android:layout_toLeftOf="@+id/button1"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
-    <com.example.jpacmandroid2.Draw
+    <com.example.jpacmandroid.Draw
         android:id="@+id/drawGame"
         android:layout_width="690dp"
         android:layout_height="660dp"

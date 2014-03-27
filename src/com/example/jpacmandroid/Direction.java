@@ -1,4 +1,4 @@
-package com.example.jpacmandroid2;
+package com.example.jpacmandroid;
 
 /**
  * Directions in which sprites can move.

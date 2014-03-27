@@ -1,5 +1,7 @@
-package com.example.jpacmandroid2;
+package com.example.jpacmandroid;
 
+
+import com.example.jpacmandroid2.R;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;

@@ -1,6 +1,6 @@
-package com.example.jpacmandroid2;
+package com.example.jpacmandroid;
 
-import com.example.jpacmandroid2.Board.SpriteType;
+import com.example.jpacmandroid.Board.SpriteType;
 
 public class Sprite {
 	/*

@@ -1,10 +1,10 @@
-package com.example.jpacmandroid2;
+package com.example.jpacmandroid;
 
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import com.example.jpacmandroid2.Board.SpriteType;
+import com.example.jpacmandroid.Board.SpriteType;
 
 import android.util.Log;
 

@@ -1,7 +1,9 @@
-package com.example.jpacmandroid2;
+package com.example.jpacmandroid;
 
 import java.util.Timer;
 import java.util.TimerTask;
+
+import com.example.jpacmandroid2.R;
 
 import android.app.Activity;
 import android.os.Bundle;

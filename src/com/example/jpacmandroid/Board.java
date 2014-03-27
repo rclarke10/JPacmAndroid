@@ -1,4 +1,4 @@
-package com.example.jpacmandroid2;
+package com.example.jpacmandroid;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
