@@ -1,12 +1,11 @@
 package com.example.jpacmandroid;
 
 
-import com.example.jpacmandroid2.R;
-
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.util.Log;
 import android.view.View;
+
+import com.example.jpacmandroid2.R;
 
 /**
  * The responsibilities of this class include obtaining images from file,

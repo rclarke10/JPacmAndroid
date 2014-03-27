@@ -2,8 +2,6 @@ package com.example.jpacmandroid;
 
 import android.util.Log;
 
-import com.example.jpacmandroid.Board.SpriteType;
-
 public class PlayerMovement {
 
 	/*

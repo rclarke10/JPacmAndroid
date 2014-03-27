@@ -14,17 +14,6 @@ import android.view.View;
 public class Draw extends View {
 	
 
-	
-	 /**
-     * Width of an individual cell, in pixels.
-     */
-    private static final int CELL_WIDTH = 30;
-
-    /**
-     * Height of an individual cell, in pixels.
-     */
-    private static final int CELL_HEIGHT = 30;
-
     /**
      * The horizontal gap between cells, in pixels.
      */
@@ -173,6 +162,9 @@ public class Draw extends View {
 			c = Color.GRAY;
 			break;
 		case OTHER:
+			c = Color.GRAY;
+			break;
+		case FOOD:
 			c = Color.GRAY;
 			break;
 		}
