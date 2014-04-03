@@ -77,7 +77,7 @@ public class Game extends Activity {
 	 */
 
 	public void startClick(View view) {
-		if(state.getState()!= 3 && state.getState()!= 2 ){
+		if(state.getState()!= State.WON && state.getState()!= State.LOST ){
 		state.setState(State.START);
 		toast("Game started.");
 		}else{
@@ -98,11 +98,14 @@ public class Game extends Activity {
 	}
 
 	/*
-	 * Stops the game
+	 * Stops the game only if the game has been started
 	 */
 	public void stopClick(View view) {
-		state.setState(State.STOP);
-		toast("Game stopped.");
+		if(state.getState() == State.START){
+			state.setState(State.STOP);
+			toast("Game stopped.");
+		}
+		
 	}
 
 	/*
