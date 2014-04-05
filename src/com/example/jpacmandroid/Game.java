@@ -5,6 +5,7 @@ import java.util.TimerTask;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -51,25 +52,30 @@ public class Game extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
+		Log.i("SS", "oncCreate");
 		// Make full screen
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 				WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
+		
+		
 		setContentView(R.layout.activity_game);
 
 		// Initializations
 		draw = (Draw) findViewById(R.id.drawGame);
 		state = new State();
+		state.setState(State.DEFAULT);
 		board = new Board(this);
 		score = new Score(board.getTotalScore(), state, this);
 		draw.setBoard(board);
 		gm = new GhostMovement(board, draw, state);
-		pm = new PlayerMovement(board, state, score, draw);
+		pm = new PlayerMovement(board, state, score, draw);	
 
 		Timer updateTimer = new Timer();
 		GhostTimerTask mtt = new GhostTimerTask();
 		updateTimer.schedule(mtt, GhostMovement.GHOST_MOVE_DELAY, GhostMovement.GHOST_MOVE_DELAY);
+				
 	}
 
 	/*
@@ -77,24 +83,33 @@ public class Game extends Activity {
 	 */
 
 	public void startClick(View view) {
-		if(state.getState()!= State.WON && state.getState()!= State.LOST ){
-		state.setState(State.START);
-		toast("Game started.");
-		}else{
-			draw = (Draw) findViewById(R.id.drawGame);
-			state = new State();
-			board = new Board(this);
-			score = new Score(board.getTotalScore(), state, this);	
+		
+		if(state.getState() == State.DEFAULT){
+		
 			draw.setBoard(board);
 			gm = new GhostMovement(board, draw, state);
 			pm = new PlayerMovement(board, state, score, draw);
-			Timer updateTimer = new Timer();
-			GhostTimerTask mtt = new GhostTimerTask();
-			updateTimer.schedule(mtt, GhostMovement.GHOST_MOVE_DELAY, GhostMovement.GHOST_MOVE_DELAY);
-
 			state.setState(State.START);
+
 			toast("Game started.");
 		}
+		else if(state.getState() == State.LOST){
+			board = new Board(this);
+			score = new Score(board.getTotalScore(), state, this);	
+			draw.setBoard(board);
+			state.setState(State.DEFAULT);
+		}
+	
+		else if(state.getState() == State.STOP){
+			state.setState(State.START);		
+		}
+		
+		else if(state.getState() == State.LOST || state.getState() == State.WON){
+			board = new Board(this);
+			score = new Score(board.getTotalScore(), state, this);	
+			draw.setBoard(board);
+		}	
+	
 	}
 
 	/*

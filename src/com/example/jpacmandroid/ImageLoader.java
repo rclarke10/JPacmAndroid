@@ -1,6 +1,8 @@
 package com.example.jpacmandroid;
 
 
+import java.io.IOException;
+
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.view.View;
@@ -18,9 +20,9 @@ import com.example.jpacmandroid2.R;
 public class ImageLoader {
 
     /**
-     * Animation sequence of images for monsters.
+     * Animation sequence of images for the ghosts.
      */
-    private Bitmap[] monsterImage;
+    private Bitmap[] ghostImage;
 
     /**
      * Animation sequence of images for the player.
@@ -55,12 +57,11 @@ public class ImageLoader {
      
     
     /**
-     * Read images for player and monsters from file.
+     * Read images for player and ghosts from file.
      * Different images exist for different phases of the animation.
-     * @throws FactoryException if the images can't be found.
      */
-    public void loadImages() {
-    	monsterImage = new Bitmap[]{
+    public void loadImages() throws IOException{
+    	ghostImage = new Bitmap[]{
 				BitmapFactory.decodeResource(view.getResources(), R.drawable.ghost1),
 				BitmapFactory.decodeResource(view.getResources(), R.drawable.ghost1)
 		};
@@ -107,8 +108,11 @@ public class ImageLoader {
 				decodeResource(view.getResources(), R.drawable.pacman4right);
 		
 		resizeAll();
-    }
+    }    
     
+    /**
+     * Resizes all images to the standard width and height
+     */    
     public void resizeAll(){
     	for(int i = 0; i < playerImage.length; i++){
     		for(int j = 0; j < playerImage[i].length; j++){
@@ -116,8 +120,8 @@ public class ImageLoader {
     		}
     	}
     	
-    	for(int i = 0; i < monsterImage.length; i++){
-    		monsterImage[i] = resize(monsterImage[i]);
+    	for(int i = 0; i < ghostImage.length; i++){
+    		ghostImage[i] = resize(ghostImage[i]);
     	}
     }
 
@@ -125,8 +129,8 @@ public class ImageLoader {
      * @return Number of different monster animation steps
      */
     public int monsterAnimationCount() {
-        assert monsterImage != null : "Monster image should not be null.";
-        int result = monsterImage.length;
+        assert ghostImage != null : "Monster image should not be null.";
+        int result = ghostImage.length;
         assert result >= 0;
         return result;
     }
@@ -160,22 +164,21 @@ public class ImageLoader {
     }
 
     /**
-     * Obtain a picture of a monster.
+     * Obtain a picture of a ghost.
      * @param animationIndex counter indicating which animation to use.
-     * @return The monster image at the given animation index.
+     * @return The ghost image at the given animation index.
      */
-    public Bitmap monster(int animationIndex) {
+    public Bitmap ghostImage(int animationIndex) {
         assert animationIndex >= 0;
-        return monsterImage[animationIndex % monsterAnimationCount()];
+        return ghostImage[animationIndex % monsterAnimationCount()];
     }   
      
     /**
-     * Resize a given image to the required dimension.
-     * @param im The image
-     * @return The resized image.
-     */
-    
-    Bitmap resize(Bitmap bm) {
+     * Resize a given bitmap to the required dimension.
+     * @param bm The bitmap
+     * @return The resized bitmap.
+     */    
+    public Bitmap resize(Bitmap bm) {
         if(bm != null){
         	  bm.getWidth();
               bm.getHeight();

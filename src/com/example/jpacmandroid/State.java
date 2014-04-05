@@ -8,6 +8,7 @@ public class State {
 	public static final int STOP = 1;
 	public static final int WON = 2;
 	public static final int LOST = 3;
+	public static final int DEFAULT = 4;
 	
 	/*
 	 * Defines current state

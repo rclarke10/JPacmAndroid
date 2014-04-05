@@ -1,5 +1,7 @@
 package com.example.jpacmandroid;
 
+import java.io.IOException;
+
 import com.example.jpacmandroid.Board.SpriteType;
 
 import android.content.Context;
@@ -52,7 +54,7 @@ public class Draw extends View {
 		boardHeight = board.getHeight();
 	}
 
-	public Draw(Context context, AttributeSet attribute_set) {
+	public Draw(Context context, AttributeSet attribute_set) throws IOException {
 		super(context, attribute_set);
 		paint = new Paint();
 		
@@ -186,7 +188,7 @@ public class Draw extends View {
 
             }
             if (sprite.getSpriteType() == SpriteType.GHOST) { 
-                 bm = imageLoader.monster(animationCount);
+                 bm = imageLoader.ghostImage(animationCount);
             }
         }
         return bm;

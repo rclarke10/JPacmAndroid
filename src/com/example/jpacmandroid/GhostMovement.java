@@ -2,6 +2,8 @@ package com.example.jpacmandroid;
 
 import java.util.Random;
 
+import android.util.Log;
+
 import com.example.jpacmandroid.Board.SpriteType;
 
 public class GhostMovement {
@@ -90,8 +92,7 @@ public class GhostMovement {
 	 * Moves the ghost, specified by its index i, in the direction dir
 	 * */	
 	public void moveGhost(int i, int dir) {
-		currSprite[i] = nextSprite[i];		
-		
+		currSprite[i] = nextSprite[i];				
 		
 		switch (dir) {
 		case UP:

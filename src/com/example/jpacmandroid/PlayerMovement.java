@@ -95,12 +95,11 @@ public class PlayerMovement {
 				//	"getSpriteAt tried to access a sprite at (x,y) out of bounds");
 		}		
 		
-		draw.invalidate();
-		
+		draw.invalidate();		
 
 	}
 
-	/*
+	/**
 	 * Eats the food and increases score
 	 */
 	private void eat() {
